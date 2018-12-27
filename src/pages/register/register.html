@@ -1,0 +1,87 @@
+<ion-header class="main-bg-color" no-bounce scrollY="false">
+  <ion-navbar>
+    <ion-title class="smallTitle">{{ 'sing_up' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+   <div class="align-flex">
+        <div class="top-item">
+          <div class="logo">
+           <img src="assets/imgs/logo.png" alt="">
+           <div class="es-10"></div>  
+          </div>
+        </div>
+
+        <div class="es-30"></div>
+
+        <div class="center-item formWrapp">
+            <form [formGroup]="registerForm" novalidate (ngSubmit)="registerUser(registerForm, register)">
+               <label class="input-field-label">
+                   <span class="img">
+                       <img src="assets/imgs/avatar.svg" alt="">
+                   </span>
+                   <input class="simple-input" type="text" [(ngModel)]="register.first_name" name="username" placeholder="Nickname" formControlName="regName" required />
+               </label>
+               <div *ngIf="errorReg && registerForm.controls.regName.hasError('required')" class="err-field">
+                 <div class="form-err">{{ 'field_required' | translate }}</div>
+               </div>
+               <div class="es-15"></div>
+               <label class="input-field-label">
+                   <span class="img">
+                       <img src="assets/imgs/mail.png" alt="">
+                   </span>
+                   <input class="simple-input" type="email" [(ngModel)]="register.email" name="useremail" placeholder="{{'email_add' | translate}}" formControlName="regEmail" required />
+               </label>
+               <div *ngIf="errorReg && registerForm.controls.regEmail.hasError('required')" class="err-field">
+                 <div class="form-err">{{ 'field_required' | translate }}</div>
+               </div>
+               <div *ngIf="errorReg && registerForm.controls.regEmail.hasError('pattern')" class="err-field">
+                 <div class="form-err">{{ 'email_not_valid' | translate }}</div>
+               </div>
+               <div class="es-15"></div> 
+                <label class="input-field-label">
+                   <span class="img">
+                       <img src="assets/imgs/lock.svg" alt="">
+                   </span>
+                   <input class="simple-input" [(ngModel)]="register.password" name="newpass" type="{{ showPassword ? 'text' : 'password'}}" placeholder="{{'password' | translate}}" formControlName="regPassword" required />
+                  <span class="passToggle" [ngClass]="{'showPass': showPassword === true}" (click)="hidPasswordToggle()">
+                   <img src="assets/imgs/view.svg" alt="">
+                   <img src="assets/imgs/hide.svg" alt="">
+                 </span>
+                </label>
+                <div *ngIf="errorReg && registerForm.controls.regPassword.hasError('required')" class="err-field">
+                  <div class="form-err">{{ 'field_required' | translate }}</div>
+                </div>
+                <div *ngIf="serverErr" class="err-field">
+                  <div class="form-err">{{serverErr}}</div>
+                </div>
+
+                <div class="es-15"></div>
+                <div class="checkbox-entry-wrap">  
+                    <label class="checkbox-entry">
+                        <input type="checkbox" formControlName="regTerms" [(ngModel)]="register.terms" required>
+                        <span>
+                          <i></i>
+                          <p>{{ 'i_agree_to' | translate }} <a href="http://uniti-app.com/terms/" target="_self">{{ 'terms' | translate }}</a></p>
+                        </span>
+                    </label>
+                </div>
+                <div *ngIf="errorReg && registerForm.controls.regTerms.hasError('required')" class="err-field">
+                    <div class="form-err">{{ 'conditions' | translate }}</div>
+                </div>
+                <div *ngIf="errorRegister" class="err-field">
+                    <div class="form-err">{{errorRegister}}</div>
+                </div>
+                <div class="es-15"></div>
+                <div class="button-link">
+                   <input type="submit">
+                   {{ 'register' | translate }}
+                </div>
+           </form>
+       </div>
+       <!--<div class="bottom-item">-->
+           <!--<div class="link-item">{{ 'have_an_account' | translate }} <b (click)="loginPage()">{{ 'log' | translate }}</b></div>-->
+       <!--</div>-->
+    </div>
+</ion-content>

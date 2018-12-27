@@ -18,6 +18,11 @@
   <!-- cordova.js required for cordova apps (remove if not needed) -->
   <script src="cordova.js"></script>
 
+<!--  <script src="assets/data/getHTMLMediaElement.js"></script>-->
+  <script src="assets/data/socket.io.js"></script>
+  <script src="assets/data/RTCMultiConnection.min.js"></script>
+  
+
   <!-- un-comment this code to enable service worker
   <script>
     if ('serviceWorker' in navigator) {
@@ -28,6 +33,7 @@
   </script>-->
 
   <link href="build/main.css" rel="stylesheet">
+<!--  <link href="assets/data/getHTMLMediaElement.css" rel="stylesheet">-->
 
 </head>
 <body>
@@ -35,8 +41,15 @@
   <!-- Ionic's root component and where the app will load -->
   <ion-app></ion-app>
 
+  
+<!--
+  <script src="https://cdn.webrtc-experiment.com/RTCMultiConnection.js"></script>
+  <script src="https://cdn.webrtc-experiment.com/FileBufferReader.js"></script>
+-->
   <!-- The polyfills js is generated during the build process -->
   <script src="build/polyfills.js"></script>
+  
+  
 
   <!-- The vendor js is generated during the build process
        It contains all of the dependencies in node_modules -->
@@ -44,6 +57,8 @@
 
   <!-- The main bundle js is generated during the build process -->
   <script src="build/main.js"></script>
+  
+  
 
 </body>
 </html>

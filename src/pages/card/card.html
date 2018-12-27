@@ -1,0 +1,56 @@
+<ion-header class="clear-bg-header">
+  <ion-navbar>
+      <ion-title>
+          <span class="title-overflow">{{ 'credit_card' | translate }}</span>
+      </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="clear-bg">
+   <div class="es-60"></div>
+   <div class="border-top"></div>
+   <div class="account-content">
+    <div *ngIf="!cardExist">
+       <div class="es-45"></div>
+        <img src="assets/imgs/no-credit-card-allowed.png" alt="">
+        <div class="es-10"></div>
+        <h2 class="h2">{{ 'no_card' | translate }}</h2>
+        <div class="es-30"></div>
+        <button class="button-link" (click)="changeCardPopup()">
+            <span>{{ 'add_card' | translate }}</span>
+        </button>
+    </div>
+       
+    <div *ngIf="cardExist">
+    <div class="es-45"></div>
+        <div class="account-form">
+            <div class="row">
+               <div class="col-100">
+                   <div class="form-field-wrap">
+                       <label class="form-field-label">{{ 'card_number' | translate }}</label>
+                        <input type="text" [(ngModel)]="card.number" readonly disabled>
+                   </div> 
+               </div>   
+               <div class="col-50">
+                  <div class="form-field-wrap">
+                      <label class="form-field-label">{{ 'card_month' | translate }}</label>
+                       <input type="text" [(ngModel)]="card.month" readonly disabled>
+                  </div>    
+                </div>
+                <div class="col-50">
+                   <div class="form-field-wrap">
+                      <label class="form-field-label">{{ 'card_year' | translate }}</label>
+                       <input type="text" [(ngModel)]="card.year" readonly disabled>
+                   </div>    
+                </div>
+                <div class="es-15"></div>
+                <div class="col-100">
+                    <button class="button-link" (click)="changeCardPopup()">
+                        <span>{{ 'add_card' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>	
+   </div>    
+</ion-content>

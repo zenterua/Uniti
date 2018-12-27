@@ -1,0 +1,41 @@
+<ion-header class="main-bg-color" scrollY="false" no-bounce>
+  <ion-navbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div class="content-auth-page">
+        <div class="top-item">
+          <div class="logo">
+           <img src="assets/imgs/logo.png" alt="">  
+          </div>    
+        </div>
+        <div class="center-item">   
+            <form [formGroup]="forgotForm" (ngSubmit)="forgotPass(forgotForm)" novalidate>  
+                <label class="input-field-label">
+                   <span class="img">
+                       <img src="assets/imgs/mail.png" alt="">
+                   </span>
+                  <input class="simple-input" formControlName="forgotEmail" [(ngModel)]="emailForgot.email" type="email" name="email" placeholder="{{'enter_email' | translate}}" required>
+                </label>
+                <div *ngIf="errorValid && forgotForm.controls.forgotEmail.hasError('required')" class="err-field">
+                  <div class="form-err">{{ 'field_required' | translate }}</div>
+                </div>
+                <div *ngIf="errorValid && forgotForm.controls.forgotEmail.hasError('pattern')" class="err-field">
+                  <div class="form-err">{{ 'email_not_valid' | translate }}</div>
+                </div>
+                <div *ngIf="errServer" class="err-field">
+                  <div class="form-err">{{errServer}}</div>
+                </div>
+                
+                <div class="es-15"></div>
+                <div class="button-link">
+                    <input type="submit">
+                    {{ 'send' | translate }}
+                </div>
+            </form>
+        </div>
+        <div class="bottom-item">
+        </div>
+    </div>  
+</ion-content>

@@ -1,0 +1,61 @@
+<ion-header class="clear-bg-header">
+  <ion-navbar>
+   <ion-title>
+       <div class="right-align">
+        <div class="button-link sm" (click)="skip()">{{skipMsg}}</div>
+       </div>
+   </ion-title>
+       
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="clear-bg">
+  <div class="es-60"></div>
+  <div class="border-top"></div>
+		    
+  <ion-slides pager (ionSlideDidChange)="slideChanged()" class="tutorial-slider">
+
+    <ion-slide>
+      <div class="wrap-point page-1">
+         <img src="assets/imgs/screen_4.png" alt="">
+         <div class="point-1 point-matk" tooltip="{{'page_1_step_1' | translate}}" positionH="right" duration="7000" ></div>
+         <div class="point-2 point-matk" tooltip="{{'page_1_step_2' | translate}}" positionV="bottom" positionH="right" duration="7000" ></div>
+         <div class="point-3 point-matk" tooltip="{{'page_1_step_3' | translate}}" positionV="bottom" positionH="right" duration="7000" ></div>
+         <div class="point-4 point-matk" tooltip="{{'page_1_step_4' | translate}}" positionV="bottom" positionH="right" duration="7000" ></div>
+         <div class="point-5 point-matk" tooltip="{{'page_1_step_5' | translate}}" positionV="bottom" positionH="right" duration="7000" ></div>
+         <div class="point-6 point-matk" tooltip="{{'page_1_step_6' | translate}}" positionV="top" positionH="right" duration="7000"></div>
+      </div> 
+    </ion-slide>
+
+    <ion-slide>
+      <div class="wrap-point page-2">
+         <img src="assets/imgs/screen_3.png" alt="">
+         <div class="point-1 point-matk" tooltip="{{'page_2_step_1' | translate}}" positionH="right" duration="2000" ></div>
+         <div class="point-2 point-matk" tooltip="{{'page_2_step_2' | translate}}" positionV="bottom" positionH="right" duration="7000" ></div>
+         <div class="point-3 point-matk" tooltip="{{'page_2_step_3' | translate}}" positionV="bottom" positionH="right" duration="7000" ></div>
+         <div class="point-4 point-matk" tooltip="{{'page_2_step_4' | translate}}" positionV="bottom" positionH="right" duration="7000" ></div>
+         <div class="point-5 point-matk" tooltip="{{'page_2_step_5' | translate}}" positionV="bottom" positionH="right" duration="7000" ></div>
+         <div class="point-6 point-matk" tooltip="{{'page_2_step_6' | translate}}" positionV="top" positionH="right" duration="7000"></div>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+     <div class="wrap-point page-3">
+        <img src="assets/imgs/screen_2.png" alt="">
+         <div class="point-1 point-matk" tooltip="{{'page_3_step_1' | translate}}" positionV="top" positionH="right" duration="7000" ></div>
+         <div class="point-2 point-matk" tooltip="{{'page_3_step_2' | translate}}" positionV="top" positionH="right" duration="7000" ></div>
+         <div class="point-3 point-matk" tooltip="{{'page_3_step_3' | translate}}" positionV="top" positionH="right" duration="7000" ></div>
+     </div>
+    </ion-slide>
+    
+    <ion-slide>
+      <div class="wrap-point page-4">
+      <img src="assets/imgs/screen_1.png" alt="">
+         <div class="point-1 point-matk" tooltip="{{'page_4_step_1' | translate}}" positionV="top"  positionH="right" duration="7000" ></div>
+         <div class="point-2 point-matk" tooltip="{{'page_4_step_2' | translate}}" positionV="top" positionH="right" duration="7000" ></div>
+         <div class="point-3 point-matk" tooltip="{{'page_4_step_3' | translate}}" positionV="top" positionH="right" duration="7000" ></div>
+      </div>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

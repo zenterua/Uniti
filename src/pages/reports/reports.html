@@ -1,0 +1,38 @@
+<ion-header class="clear-bg-header">
+  <ion-navbar>
+      <ion-title>
+        {{ 'reports' | translate }}
+      </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="clear-bg">
+  <div class="es-60"></div>
+  <div class="border-top"></div>
+   <ul class="menu-list">
+       <li *ngIf="reportPage3Exist == 'purchase'" (click)="openReportPage1()">
+         <div class="lk">  
+           <span class="img"><img src="assets/imgs/account_icon_4.png" alt=""></span>
+           <span class="txt">{{ 'reports_title_1' | translate }}</span>
+         </div>
+       </li>
+       <li *ngIf="reportPage1Exist == 'transfer'" (click)="openReportPage2()">
+         <div class="lk">   
+           <span class="img max-30"><img src="assets/imgs/account_icon_7.png" alt=""></span>
+           <span class="txt">{{ 'reports_title_2' | translate }}</span>
+         </div>
+       </li>
+       <li *ngIf="reportPage2Exist == 'activate'" (click)="openReportPage3()">
+          <div class="lk"> 
+           <span class="img"><img src="assets/imgs/account_icon_2.png" alt=""></span>
+           <span class="txt">{{ 'reports_title_3' | translate }}</span>
+           </div>
+       </li>
+       <li *ngIf="reportPage4Exist == 'chat'" (click)="openReportPage4()">
+          <div class="lk"> 
+           <span class="img"><img src="assets/imgs/account_icon_1.png" alt=""></span>
+           <span class="txt">{{ 'reports_title_4' | translate }}</span>
+           </div>
+       </li>
+   </ul>     
+</ion-content>

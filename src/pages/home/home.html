@@ -1,14 +1,437 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-</ion-content>
+<ion-content scrollY="false" no-bounce>
+    <div class="content-auth-page type-2" [attr.id]="this.globalLang">
+      <div class="top-item">
+        <div class="user-item" (click)="accountPage()">
+           <div class="img">
+               <div class="bg" *ngIf="!userData.avatar" [ngStyle]="{'background-image':'url(assets/imgs/user_avatar.png)'}"></div>
+               <div class="bg" *ngIf="userData.avatar" [ngStyle]="{'background-image':'url(' + userData.avatar + ')'}"></div>
+           </div>
+           <div class="txt">
+               <h2 class="h4 title">{{userData.username}}</h2>
+               <p class="light">{{userData.email}}</p>
+           </div> 
+        </div>
+        <div class="rooms-wrapper">
+         <div class="es-20"></div>
+          <div class="credit-item-row">
+           <div class="active-credit-item">
+            <div class="credit-item">
+               <div class="txt">
+                   <b>{{activeCredits}}</b>
+                   <span>{{ 'active_credits' | translate }}</span>
+               </div>
+               <button class="button-sm no-active" [ngClass]="{'active':allCredits>0 , 'isopen':activateCredit}" (click)="startActivateCredits()">
+                   <img src="assets/imgs/icon_to_active.png" alt="">
+               </button>
+            </div>
+           </div>  
+           <div class="remaining-credit-item"> 
+            <div class="credit-item">
+               <div class="txt">
+                   <b>{{allCredits}}</b>
+                   <span>{{ 'home_t2' | translate }}</span>
+               </div>
+               <button class="button-sm no-active" (click)="transferCredits()" [ngClass]="{'active':allCredits>0 , 'isopen':transferCredit}">
+                   <img src="assets/imgs/icon_transfer.png" alt="">
+               </button>
+               <button class="button-sm" [ngClass]="{'active':allCredits>0 , 'isopen':range}" >
+                   <div (click)="openRange()" class="close-layer"></div>
+                   <div class="open-layer" (click)="closeRange()" [ngClass]="{'sh':range}"></div>
+                     <img src="assets/imgs/icon_shop.png" alt="">
+               </button>
+            </div>
+           </div>
+          </div>
+          
+          <!--ACTIVATE CREDITS-->
+
+          <div [hidden]="!activateCredit">
+            <div class="es-15"></div>
+            <span class="light lg" text-center>{{ 'active_your_credit' | translate }}</span>
+            <div class="es-10"></div>
+            <div class="count-button" >
+              <input type="tel" [(ngModel)]="creditsToActive" class="count-input" #openKeyField4>
+                <span (click)="addCreditToActive()"></span>
+            </div>
+          </div>
+          
+          <!--TRANSFER CREDITS TO USER-->
+          
+          <div [hidden]="!transferCredit">
+           <form [formGroup]="transferEmail" (ngSubmit)="transferCreditToUser(transferEmail)" novalidate>
+            <div class="es-15"></div>
+            <span class="light lg" text-center>{{ 'home_t3' | translate }}</span>
+            <div class="es-10"></div>
+            <div class="transfer-credits-user">
+               <input formControlName="trEmail" type="email" placeholder="{{'recipients_email' | translate}}" class="transfer-input" name="tremail" [(ngModel)]="emailTransform" required #openKeyField3> 
+               <div class="es-15"></div>
+                <div class="wrap">
+                    <div class="toggle-checkbox">
+                        <ion-label>{{ 'home_t4' | translate }}</ion-label>
+                        <ion-toggle formControlName="isActiveTransfer" [(ngModel)]="isActiveTransfer" (ngModelChange)="transferIsActive()"></ion-toggle>
+                    </div>
+                    <div class="wrap-count">
+                       <span class="light lg">{{ 'home_t5' | translate }}</span> 
+                       <div class="count-button type-2">
+                         <input type="tel" [(ngModel)]="creditsToTransfer" formControlName="creditsToTransfe" class="count-input">
+                            <span>
+                                <input type="submit">
+                            </span>
+                        </div> 
+                    </div>
+                </div> 
+            </div>
+            </form>
+        </div>
+       
+        <!--BUE CREDITS-->
+          
+        <div [hidden]="!range">
+            <div class="es-15"></div>
+            <span class="light lg max-250" text-center>{{ 'home_t6' | translate }}</span>
+            <div class="es-15"></div>
+            <div class="count-button">
+              <input type="tel" [(ngModel)]="count" class="count-input" #openKeyField2>
+                <span (click)="payCreditsConfirm()"></span>
+            </div>
+        </div>
+          
+        <div [hidden]="!passForCredit" class="custome-popup">
+               <div class="custome-popup-wrap">
+                <div class="close-popup" (click)="passForCredit = false; passToCredit=''; closePayCredits = false">
+                   <img src="assets/imgs/close.svg" alt=""> 
+                </div>
+                <h4 class="h4 title">{{ 'home_t7' | translate }}</h4>
+                <div class="es-20"></div>
+                <input type="password" [(ngModel)]="passToCredit" class="number-input-type" #openKeyField1>
+                <div class="es-20"></div>
+                <button class="button-popup" (click)="openPayForCredits()">
+                    <img src="assets/imgs/verification-mark.svg" alt="">
+                </button>
+                <div class="es-15"></div>
+                 <div (click)="forgotPage()" class="link-item style-2">{{ 'forgot_password' | translate }}</div>
+              </div>    
+        </div>
+        
+        <div [hidden]="!createRoomChat" class="custome-popup">
+              <div class="custome-popup-wrap">   
+                <div class="close-popup" (click)="createRoomChat = false">
+                   <img src="assets/imgs/close.svg" alt=""> 
+                </div>
+                <h4 class="h4 title">{{ 'create_group_key' | translate }}</h4>
+                <div class="es-20"></div>
+                   <div class="createKeyWrapper" [ngClass]="{'keyNotExist': keyCheckExist === true}">
+                       <div class="keySpiner">
+                           <img src="assets/imgs/30.gif" alt="">
+                       </div>
+                       <div class="number-input-create">
+                           <input type="text" [(ngModel)]="room_open" id="room-id-open" maxlength="6" disabled>
+                           <span class="button-sm active" (click)="generatePassword()">
+                       <div class="align-v">
+                          <img src="assets/imgs/suffle.png" alt="" >
+                       </div>
+                    </span>
+                       </div>
+                   </div>
+
+                <div class="es-20"></div>
+                <button class="button-popup" (click)="openRoom(room_open)">
+                    <img src="assets/imgs/verification-mark.svg" alt="">
+                </button>
+              </div>
+        </div>
+        
+        <div [hidden]="!joinRoomChat" class="custome-popup">
+              <div class="custome-popup-wrap">   
+                <div class="close-popup" (click)="joinRoomChat = false">
+                   <img src="assets/imgs/close.svg" alt=""> 
+                </div>
+                <h4 class="h4 title">{{ 'enter_group_key' | translate }}</h4>
+                <div class="es-20"></div>
+                <input type="url" [(ngModel)]="room_join" id="room-join-id" class="number-input-type" maxlength="4" (keyup)="checkRoomlen(room_join);"  #openKeyField5>
+                <div class="es-20"></div>
+                <button class="button-popup" (click)="joinToOpenRoom(room_join)">
+                    <img src="assets/imgs/verification-mark.svg" alt="">
+                </button>
+              </div>
+        </div>
+        
+        </div>
+        
+        <div [hidden]="!startVoiceTime">
+         <div class="es-15"></div>
+         <div class="credit-item-row type-2">
+           <div class="active-credit-item">
+            <div class="credit-item">
+               <div class="txt">
+                   <b>{{numberVoiceChatUsers}}/{{activeCredits}}</b>
+                   <span>{{ 'audio_users' | translate }}</span>
+               </div>
+            </div>
+           </div>  
+           <div class="remaining-credit-item"> 
+            <div class="credit-item">
+               <div class="txt">
+                   <b>{{activeUserInGroupLen}}</b>
+                   <span>{{ 'all_users' | translate }}</span>
+               </div>
+            </div>
+           </div>
+           <div class="timer-credit-item"> 
+            <div class="credit-item">
+               <div class="txt">
+                   <b>
+                   {{hoursDisplay ? hoursDisplay : '00'}}:{{(minutesDisplay) && (minutesDisplay <= 59) ? minutesDisplay : '00'}}:{{(secondsDisplay) && (secondsDisplay <= 59) ? secondsDisplay : '00'}}
+                   </b>
+               </div>
+               <div class="stop-timer" (click)="exitCreateChat()" >
+                   <div class="align-v">
+                       <img src="assets/imgs/close.svg" alt="">
+                   </div> 
+               </div>
+            </div>
+           </div>     
+          </div>
+        </div>  
+        
+        <div class="es-50"></div>
+        
+        <div class="chat-button" [hidden]="hideStartButton">
+            <div class="ch-link" (click)="createRoom()">
+                <div class="align-v">
+                    <img src="assets/imgs/icon_create.png" alt="">
+                    <span>{{ 'create' | translate }}</span>
+                </div>
+            </div>
+            <div class="ch-link" (click)="joinRoom()">
+                <div class="align-v">
+                    <img src="assets/imgs/icon_join.png" alt="">
+                    <span>{{ 'join' | translate }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-button">
+           <div [hidden]="!openRoomShow" class="join-room-wrap">
+                <div class="ch-link" [ngClass]="{'stop':record}">
+                    <div class="align-v" (click)="startToVoiceChat()" id="startSpeak">
+                        <img src="assets/imgs/voice_chat_start.png" alt="">
+                        <span>{{ 'speak' | translate }}</span>
+                    </div>
+                    <div class="stop-records" [hidden]="!record" (click)="muteVoiceChat()" >
+                       <div class="align-v" *ngIf="!soundOff">
+                        <img src="assets/imgs/icon_mic3.png" alt="">
+                        <span>{{ 'pause' | translate }}</span>
+                       </div>
+                       <div class="align-v" *ngIf="soundOff">
+                        <img src="assets/imgs/icon_mic2.png" alt="">
+                        <span>{{ 'start' | translate }}</span>
+                       </div>    
+                    </div>
+                </div>
+                <div class="ch-link" (click)="openMessChatAll()">
+                    <div class="align-v">
+                        <img src="assets/imgs/notify_all.png" alt="">
+                        <span>{{ 'notify_all' | translate }}</span>
+                    </div>
+                </div>
+                <div (click)="stopToVoiceChat()" id="closes"></div>
+                <span class="number-room">
+                <div class="sound-off" [hidden]="!record" (click)="stopToVoiceChatAlert()" id="stopVoice">
+                    <div>
+                        <img src="assets/imgs/stop.png" alt="">
+                    </div>
+                </div>
+                <p>{{boardRoom}}</p>
+                <span class="exit-link type-2" (click)="copyToClipboard(boardRoom)">
+                    <div class="align-v">
+                       <img src="assets/imgs/clipboard.png" alt="">
+                     </div>
+                </span>
+                </span> 
+           </div>
+           
+           <div [hidden]="!joinRoomShow" class="join-room-wrap">
+             <div class="wrap-rel" #voicechat>
+              <div class="ch-link hided">
+                <div class="align-v" (click)="joinToVoiceChat()" id="startListen">
+                  <img src="assets/imgs/icon_mic.png" alt="" class="max-h-55">
+                  <span>{{ 'listen' | translate }}</span>
+                </div>
+                <div class="stop-records" [hidden]="!voiceActive" id="stopListen" (click)="stopFromVoiceChat()">
+                   <div class="align-v">
+                    <img src="assets/imgs/icon_mic3.png" alt="" class="max-h-55">
+                    <span>{{ 'pause' | translate }}</span>
+                   </div>    
+                </div>
+             </div>
+             <div class="ch-link showd">
+                <div class="stop-records type-2">
+                   <div class="align-v">
+                    <img src="assets/imgs/icon_mic.png" alt="" class="max-h-55">
+                    <span>{{ 'closed' | translate }}</span>
+                   </div>    
+                </div>
+             </div>
+             <div class="ch-link is-full" #fullchat (click)="joinToVoiceChat()">
+                <div class="stop-records">
+                   <div class="align-v">
+                    <img src="assets/imgs/icon_mic3.png" alt="" class="max-h-55">
+                    <span>{{ 'chat_is_full' | translate }}</span>
+                   </div>    
+                </div>
+             </div>
+            </div> 
+             
+             <div class="ch-link" (click)="openChatWithAdmin()">
+                <div class="align-v">
+                    <img src="assets/imgs/notify_all.png" alt="">
+                    <span>{{ 'message' | translate }}</span>
+                </div>
+                <span class="ch-numb" *ngIf="messCount>0">{{messCount}}</span>
+             </div>
+             <span class="number-room unsafe">
+              <p>{{boardRoom}}</p>
+              <span (click)="exitFromChat()" class="exit-link">
+                 <div class="align-v">
+                   <img src="assets/imgs/logout.png" alt="">
+                 </div>
+              </span>
+             </span>  
+           </div> 
+        </div>
+      </div>
+   <div id="audios-container" #audioPlay></div>
+   <div (click)="startSreamAgain()" id="checkroom"></div>
+ </div>
+
+  </ion-content>
+
+  <div class="button-user-list" *ngIf="groupChatStart">
+    <div class="button-user-list-wrap">
+      <div class="all-user-list" [hidden]="!openUsersChatList">
+        <ul #userItem>
+         <li *ngFor="let u of users | keys; let i = index" [hidden]="users[u]._id == userData.id">
+            <div class="user-name-wrap" (click)="chatToUser(users[u])" [ngClass]="{'chats':users[u].chat == true}">
+               <div class="img">
+                 <div class="lisy-avatar" *ngIf="users[u].avatar" [ngStyle]="{'background-image':'url(' + users[u].avatar + ')'}">
+                 </div>
+                 <div class="lisy-avatar" *ngIf="!users[u].avatar" [ngStyle]="{'background-image':'url(assets/imgs/user_avatar.png)'}">
+                 </div>
+               </div>
+               <span class="title">
+                   {{users[u].first_name}}
+               </span>
+            </div>
+            <div class="txt">
+               <span class="user-button">
+                   <button class="u-button u-chat" (click)="chatToUser(users[u])">
+                       <div class="align-v">
+                           <img src="assets/imgs/consulting-message2.svg" alt="">
+                       </div>
+                   </button>
+                   <button class="u-button u-delate">
+                      <div class="layer-click h-in-lock" (click)="lockUser(i, u)">
+                       <div class="align-v">
+                           <img src="assets/imgs/lock_user.png" alt="">
+                       </div>
+                      </div>
+                      <div class="layer-click s-in-lock" (click)="unlockUser(i, u)">
+                       <div class="align-v">
+                           <img src="assets/imgs/open-padlock.png" alt="">
+                       </div>
+                      </div>
+                   </button>
+               </span>
+            </div>
+         </li>
+      </ul>
+      </div>
+      <div class="button-open type-2 hide-open" float-left (click)="openAllUsers()" [ngClass]="{'start': groupChatStart && isAdmin}">
+        <span class="numb" *ngIf="messCountAdm>0">{{messCountAdm}}</span>
+        <img src="assets/imgs/icon_chat.png" alt="" class="img-align">
+        <div class="close-button-layer" [hidden]="!layerClose">
+           <div class="align-v" >
+             <img src="assets/imgs/close_2.svg" alt="">
+           </div>
+        </div>
+      </div>
+    </div>
+</div> 
+      
+<div class="button-open menu-account" menuToggle>
+    <img src="assets/imgs/icon_account.png" alt="" class="img-align">
+</div> 
+       
+<div [hidden]="!messChatToAll" class="custome-popup chat-popup chat-to-all">
+  <div class="custome-popup-wrap">
+      <div class="headre-message-box">
+         <div class="close-popup" (click)="messChatToAll = false">
+           <img src="assets/imgs/close.svg" alt="">
+         </div>
+         <h4 class="h4 title" *ngIf="openRoomShow">{{ 'write_message' | translate }}</h4>
+         <h4 class="h4 title" *ngIf="joinRoomShow">{{ 'write_message_to_admin' | translate }}</h4>
+      </div>
+      <div class="es-15"></div>
+      <ion-scroll scrollY="true" class="chat-scroll">
+      <ion-grid #myMessage>
+          <ion-row *ngFor="let message of messages;">
+
+            <ion-col col-9 *ngIf="message.from !== nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}" [hidden]="isAdmin">
+              <span class="user_name">{{ message.from }}:</span><div class="time">{{message.date | date:chatMessageFormat}}</div>
+              <span class="user_message">{{ message.text}}</span>
+            </ion-col>
+
+            <ion-col offset-3 col-9 *ngIf="message.from === nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}" [hidden]="message.toUserId">
+              <span class="user_name">{{ message.from }}:</span><div class="time">{{message.date | date: chatMessageFormat}}</div>
+              <span class="user_message">{{ message.text }}</span>
+            </ion-col>
+          </ion-row>
+      </ion-grid>
+      <div class="elem-scroll" id="scrollToBottom"></div>
+      </ion-scroll>
+      <div class="input-mess-chat-wrap">
+          <textarea [(ngModel)]="message" placeholder="{{'write_mess' | translate}}" class="input-mess-chat" id="send-mess" #chattoalluser></textarea>
+          <button class="button-popup" (click)="sendMessAll()">
+              {{ 'send' | translate }}
+          </button>
+      </div>
+  </div>
+</div>
+
+<div [hidden]="!messChatToAdmin" class="custome-popup chat-popup">
+  <div class="custome-popup-wrap">
+      <div class="headre-message-box">
+      <div class="close-popup" (click)="closeToUserChat()">
+          <img src="assets/imgs/close.svg" alt="">
+      </div>
+      <h4 class="h4 title">{{ 'write_message_to' | translate }} <span *ngIf="chatName">{{chatName}}</span></h4>
+      </div>
+      <div class="es-15"></div>
+      <ion-scroll scrollY="true" class="chat-scroll">
+      <ion-grid #myAdminMessage>
+          <ion-row *ngFor="let message of messages;">
+
+            <ion-col col-9 *ngIf="message.id == userId" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
+              <span class="user_name">{{ message.from }}:</span><div class="time">{{message.date | date: chatMessageFormat}}</div>
+              <span class="user_message">{{ message.text }}</span>
+            </ion-col>
+
+            <ion-col offset-3 col-9 *ngIf="message.from === nickname && message.toUserId == userId" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
+              <span class="user_name">{{ message.from }}:</span><div class="time">{{message.date | date: chatMessageFormat}}</div>
+              <span class="user_message">{{ message.text }}</span>
+            </ion-col>
+
+          </ion-row>
+      </ion-grid>
+      <div class="elem-scroll" id="scrollToBottomUser"></div>
+      </ion-scroll>
+      <div class="input-mess-chat-wrap">
+          <textarea type="text" [(ngModel)]="messageAdmin" placeholder="{{'write_mess' | translate}}" class="input-mess-chat" #chattoprivatuser></textarea>
+          <button class="button-popup" (click)="sendPrivateMess()">
+              {{ 'send' | translate }}
+          </button>
+      </div>
+  </div>
+</div>

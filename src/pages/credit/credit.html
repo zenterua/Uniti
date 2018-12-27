@@ -1,0 +1,73 @@
+
+<ion-header class="clear-bg-header">
+  <ion-navbar>
+      <ion-title>
+          <span class="title-overflow">{{ 'add_credit_card' | translate }}</span>
+      </ion-title>
+      <button (click)="dismiss()" class="close-header">
+         <img src="assets/imgs/close.svg" alt="">
+      </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="clear-bg">
+   <div class="es-60"></div>
+   <div class="border-top"></div>
+   <div class="es-45"></div>
+   <div class="account-content">
+    <form class="account-form" [formGroup]="paycardForm" novalidate (ngSubmit)="addPayCard(paycardForm)">
+      <div class="row">
+           <div class="col-100">
+               <div class="form-field-wrap">
+                   <label class="form-field-label">{{ 'card_number' | translate }}</label>
+                    <input type="tel" placeholder="Enter Card Number" [(ngModel)]="card.card_number" formControlName="cardNumber"  required>
+                    <div *ngIf="errorCard && paycardForm.controls.cardNumber.hasError('required')" class="err-field">
+                        <div class="form-err">{{ 'field_required' | translate }}</div>
+                    </div>
+               </div> 
+           </div>   
+           <div class="col-50">
+             <label class="form-field-label"> {{ 'select_card_month' | translate }}</label>
+              <div class="form-field-wrap">
+                   <div class="select-field-arrow"></div>
+                   <select name="monthSelect" formControlName="cardMonth" [(ngModel)]="card.card_month" class="select-field" required>
+                        <option *ngFor="let opt of monthOption" [value]="opt.val">{{opt.val}}</option>
+                   </select>
+                   <div *ngIf="errorCard && paycardForm.controls.cardMonth.hasError('required')" class="err-field">
+                      <div class="form-err">{{ 'field_required' | translate }}</div>
+                   </div>
+              </div>    
+            </div>
+            <div class="col-50">
+              <label class="form-field-label">{{ 'select_card_year' | translate }}</label>
+               <div class="form-field-wrap">
+                    <div class="select-field-arrow"></div>
+                    <select name="yearSelect" formControlName="cardYear" [(ngModel)]="card.card_year" class="select-field" required>
+                        <option *ngFor="let year of yearOption" [value]="year.val">{{year.val}}</option>
+                    </select>
+                    <div *ngIf="errorCard && paycardForm.controls.cardYear.hasError('required')" class="err-field">
+                        <div class="form-err">{{ 'field_required' | translate }}</div>
+                    </div>
+               </div>    
+            </div>
+            <div class="col-100">
+                <div class="form-field-wrap">
+                   <label class="form-field-label">{{ 'cvv_code' | translate }} </label>
+                    <input type="password" placeholder="Enter CVV Code" [(ngModel)]="card.card_code" formControlName="cardCVV" maxlength="4" required>
+                    <div *ngIf="errorCard && paycardForm.controls.cardCVV.hasError('required')" class="err-field">
+                        <div class="form-err">{{ 'field_required' | translate }}</div>
+                    </div>
+                    <div *ngIf="cardError" class="err-field">
+                        <div class="form-err">{{cardError}}</div>
+                    </div>
+                </div>
+                <div class="es-15"></div>
+                <div class="button-link">
+                    <input type="submit">
+                    {{ 'add_card' | translate }} 
+                </div>
+            </div>
+        </div>
+    </form>	
+   </div>    			
+</ion-content>

@@ -1,0 +1,117 @@
+<ion-content>
+  <div class="homeTutorial">
+    <div class="es-10"></div>
+      <div>{{proximityStates | json }}</div>
+    <div>{{test | json }}</div>
+      <div>{{ test2 | json }}</div>
+    <ion-slides pager loop class="paginationWhite">
+
+      <ion-slide>
+        <div class="previewSlide slidePreviewAnimation">
+          <h2 class="h2 previewTitle fadeInTop aniDelay-1">{{ 'Tourist' | translate }}</h2>
+          <div class="imgWrapper">
+            <img class="scale aniDelay-4" src="assets/imgs/join-preview.png" alt="">
+          </div>
+
+          <div class="simpleArticle fadeInTop aniDelay-4">
+            <h3 class="h3 as">{{ 'JointheGroup' | translate }}</h3>
+            <p>{{ 'previewDescription1' | translate }}</p>
+            <p>{{ 'previewDescription2' | translate }}</p>
+          </div>
+        </div>
+      </ion-slide>
+
+      <ion-slide>
+        <div class="previewSlide slidePreviewAnimation">
+          <h2 class="h2 previewTitle fadeInTop aniDelay-1">{{ 'Tourist' | translate }}</h2>
+          <div class="imgWrapper">
+            <img class="rotate leftAni aniDelay-2" src="assets/imgs/1.png" alt="">
+            <img class="rotate rightAni aniDelay-2" src="assets/imgs/4.png" alt="">
+          </div>
+
+          <div class="simpleArticle fadeInTop aniDelay-4">
+            <h3 class="h3 as">{{ 'ListenTourGuide' | translate }} </h3>
+            <p>{{ 'previewDescription3' | translate }}</p>
+          </div>
+          <div class="simpleArticle fadeInTop aniDelay-5">
+            <h3 class="h3 as"> {{ 'MessageTourGuide' | translate }}</h3>
+            <p>{{ 'previewDescription4' | translate }} </p>
+          </div>
+        </div>
+      </ion-slide>
+
+      <ion-slide>
+        <div class="previewSlide slidePreviewAnimation">
+          <h2 class="h2 previewTitle fadeInTop aniDelay-1">{{ 'TourGuide' | translate }}</h2>
+          <div class="imgWrapper">
+            <img class="slide" src="assets/imgs/create-preview.png" alt="">
+            <img class="slide" src="assets/imgs/copy-preview.png" alt="">
+          </div>
+
+          <div class="simpleArticle fadeInTop aniDelay-4">
+            <h3 class="h3 as">{{ 'CreateGroup' | translate }}</h3>
+            <p>{{ 'previewDescription5' | translate }} </p>
+            <p>{{ 'previewDescription6' | translate }} </p>
+          </div>
+          <div class="simpleArticle fadeInTop aniDelay-5">
+            <h3 class="h3 as">{{ 'ShareKey' | translate }}</h3>
+            <p>{{ 'previewDescription7' | translate }} </p>
+          </div>
+        </div>
+      </ion-slide>
+
+      <ion-slide>
+        <div class="previewSlide slidePreviewAnimation">
+          <h2 class="h2 previewTitle fadeInTop aniDelay-1">{{ 'TourGuide' | translate }}</h2>
+          <div class="imgWrapper">
+            <img class="rotate leftAni aniDelay-2" src="assets/imgs/3.png" alt="">
+            <img class="rotate rightAni aniDelay-2" src="assets/imgs/2.png" alt="">
+          </div>
+
+          <div class="simpleArticle fadeInTop aniDelay-4">
+            <h3 class="h3 as">{{ 'SpeakGroup' | translate }}</h3>
+            <p>{{ 'previewDescription8' | translate }} </p>
+          </div>
+          <div class="simpleArticle fadeInTop aniDelay-5">
+            <h3 class="h3 as">{{ 'SendNotification' | translate }}</h3>
+            <p>{{ 'previewDescription9' | translate }} </p>
+            <p>{{ 'previewDescription10' | translate }} </p>
+          </div>
+        </div>
+      </ion-slide>
+
+      <ion-slide>
+        <div class="previewSlide slidePreviewAnimation">
+          <h2 class="h2 previewTitle fadeInTop aniDelay-1">{{ 'TourGuide' | translate }}</h2>
+          <div class="imgWrapper">
+            <img class="fadeInTop aniDelay-2 fullSizeImg" src="assets/imgs/activate-transfer-preview.png" alt="">
+          </div>
+
+          <div class="simpleArticle fadeInTop aniDelay-4">
+            <h3 class="h3 as paddAs"><img src="assets/imgs/activate-transfer-icon.png" alt=""> {{ 'TransferCredits' | translate }}</h3>
+            <p>{{ 'previewDescription11' | translate }} </p>
+          </div>
+          <div class="simpleArticle fadeInTop aniDelay-5">
+            <h3 class="h3 as paddAs"><img src="assets/imgs/activate-transfer-icon-2.png" alt=""> {{ 'ActivateCredits' | translate }}</h3>
+            <p>{{ 'previewDescription12' | translate }} </p>
+          </div>
+        </div>
+      </ion-slide>
+
+    </ion-slides>
+
+    <ion-grid class="buttonWrapper">
+      <ion-row>
+        <ion-col col-sm-6 col-12>
+          <div class="button-link light" (click)="pushRegisterPage();">{{ 'newToUniti' | translate }}</div>
+        </ion-col>
+        <ion-col col-sm-6 col-12>
+          <div class="button-link btnStyle2" (click)="pushLoginPage();">{{ 'alreadyUsed' | translate }}</div>
+          <button (click)="testBtn();" style="width: 200px; height: 50px;">ON</button>
+          <button (click)="testBtn2();" style="width: 200px; height: 50px;">OFF</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="es-10"></div>
+  </div>
+</ion-content>

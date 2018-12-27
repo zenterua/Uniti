@@ -1,0 +1,87 @@
+<ion-header class="main-bg-color">
+  <ion-navbar>
+      <ion-title>
+          <span class="title-overflow">{{'purchase_reports' | translate }}</span>
+          <div class="right-align">
+          <span class="exit-link type-3" (click)="exportPurchaseReport()">
+            <div class="align-v">
+               <img src="assets/imgs/download.png" alt="">
+             </div>
+          </span>
+          </div>
+      </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="clear-bg">
+       <div class="es-60"></div>
+       <div class="border-top col-2"></div>
+       <div class="main-bg-content">
+       <div class="es-20"></div>
+       <div class="credit-time-filter">
+            <div class="select-day">
+                 <div class="form-field-wrap">
+                  <div class="select-field-arrow"></div>
+                      <select class="select-field" [(ngModel)]="filterTime" (ngModelChange)="filterByTime($event)">
+                         <option value="0" disabled selected>{{'select_type' | translate}}</option>
+                          <option *ngFor="let t of timeFilterArr" [ngValue]="t.type">{{t.text}}</option>
+                      </select>
+                 </div>
+            </div>  
+            <div class="select-date">
+                 <div class="form-field-wrap">
+                 <div class="select-field-arrow"></div>
+                 <div class="piker-layer" (click)="openPiker()"></div>
+                      <ion-item class="select-field">
+                          <ion-label>{{dateText}}</ion-label>
+                          <ion-datetime [displayFormat]="format" [monthNames]="monthNamesArr" [pickerFormat]="format" [(ngModel)]="filterDate" (ngModelChange)="filterByDate()" #picker></ion-datetime>
+                      </ion-item>
+                 </div>
+            </div>   
+       </div>
+       <div class="circle-chart align-flex">
+           <div class="left-side">
+              <canvas #circleChartPurchase class="canvas-elem" width="120" height="120"></canvas>
+              <div class="percentage">
+                  {{ percentage | number }}%
+                  <b>{{'declined' | translate }}</b>
+              </div>
+           </div>
+           <div class="right-side">
+             <div class="legend-item style-2 type-1"> 
+               <div class="number-point">${{compleatedNumber | number:'1.2-2'}}</div>
+               <span>{{'compleated' | translate }}</span>
+             </div>
+             <div class="legend-item style-2 type-2"> 
+               <div class="number-point">${{declinedNumber | number:'1.2-2'}}</div>
+               <span>{{'declined' | translate }}</span>
+             </div>    
+           </div>
+       </div>
+       <div class="es-20"></div>
+       </div>
+       <div class="chart-content"> 
+       <div class="es-20"></div>
+       <ion-list class="chart-table style2" *ngIf="noReports == false">
+           <ion-item class="report-th">
+               <div class="report-td">{{'when' | translate }}</div>
+               <div class="report-td">{{'AMT' | translate }}</div>
+               <div class="report-td">{{'credits' | translate }}</div>
+               <div class="report-td">{{'status' | translate }}</div>
+           </ion-item>
+           <ion-item *ngFor="let item of resultArr | orderBy:order:ascending">
+               <div class="report-td">{{item.date | date: arrFormat}}</div>
+               <div class="report-td">${{item.amount | number:'1.2-2'}}</div>
+               <div class="report-td">{{item.credits}}</div>
+               <div class="report-td">{{item.status}}</div>
+           </ion-item>
+       </ion-list>
+       <div class="es-30"></div>
+       <div class="align-flex text-center" *ngIf="noReports">
+          <div>
+            <div class="es-10"></div>
+            <h2 class="h2">{{'no_reports' | translate }}</h2>
+          </div>    
+       </div>
+       </div>
+</ion-content>

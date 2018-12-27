@@ -1,0 +1,26 @@
+<ion-header class="clear-bg-header">
+  <ion-navbar>
+      <ion-title>
+          <span class="title-overflow">{{'reports_title_2' | translate }}</span>
+      </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="clear-bg">
+  <div class="es-60"></div>
+  <div class="border-top"></div>
+   <ul class="menu-list type-2">
+       <li (click)="openReportPage1()">
+         <div class="lk">   
+           <span class="img"><img src="assets/imgs/account_icon_9.png" alt=""></span>
+           <span class="txt">{{'transfer_recipient_date' | translate }}</span>
+         </div>
+       </li>
+       <li (click)="openReportPage2()">
+         <div class="lk">   
+           <span class="img"><img src="assets/imgs/account_icon_8.png" alt=""></span>
+           <span class="txt">{{'transfer_recipient_email' | translate }}</span>
+         </div>
+       </li>
+   </ul>     
+</ion-content>

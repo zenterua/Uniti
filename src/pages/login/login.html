@@ -1,0 +1,64 @@
+<ion-header class="main-bg-color" no-bounce scrollY="false">
+  <ion-navbar>
+    <ion-title class="smallTitle">{{ 'login' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce scrollY="false">
+    <div class="align-flex">
+        <div class="top-item">
+          <div class="logo">
+           <img src="assets/imgs/logo.png" alt="">  
+          </div>    
+        </div>
+
+        <div class="es-30"></div>
+
+        <div class="center-item formWrapp">
+            <form [formGroup]="loginForm" novalidate (ngSubmit)="login(loginForm, user)">
+               <label class="input-field-label">
+                   <span class="img">
+                       <img src="assets/imgs/mail.png" alt="">
+                   </span>
+                   <input class="simple-input" type="email" [(ngModel)]="user.email" name="userlogin" placeholder="{{'email' | translate}}" formControlName="loginName" required />
+               </label>
+               <div *ngIf="errorLog && loginForm.controls.loginName.hasError('required')" class="err-field">
+                 <div class="form-err">{{ 'field_required' | translate }}</div>
+               </div>
+               <div *ngIf="errorLog && loginForm.controls.loginName.hasError('pattern')" class="err-field">
+                 <div class="form-err">{{ 'email_not_valid' | translate }}</div>
+               </div>
+               <div class="es-15"></div>
+               <label class="input-field-label">
+                   <span class="img">
+                       <img src="assets/imgs/lock.svg" alt="">
+                   </span>
+                   <input class="simple-input" type="{{ showPassword ? 'text' : 'password'}}" [(ngModel)]="user.password" name="userpass" placeholder="{{'password' | translate}}" formControlName="loginPass" required />
+                 <span class="passToggle" [ngClass]="{'showPass': showPassword === true}" (click)="hidPasswordToggle()">
+                   <img src="assets/imgs/view.svg" alt="">
+                   <img src="assets/imgs/hide.svg" alt="">
+                 </span>
+               </label>
+               <div *ngIf="errorLog && loginForm.controls.loginPass.hasError('required')" class="err-field">
+                 <div class="form-err">{{ 'field_required' | translate }}</div>
+               </div>
+               <div *ngIf="serverErr" class="err-field">
+                 <div class="form-err">{{serverErr}}</div>
+               </div>
+               
+               <div class="es-15"></div>
+               <div class="button-link">
+                   <input type="submit">
+                   {{ 'login' | translate }}
+               </div>
+               <div class="es-15"></div>
+               <div (click)="forgotPage()" class="link-item">{{ 'forgot_password' | translate }}</div>
+           </form>
+        </div>
+        <!--<div class="bottom-item">-->
+            <!--<div class="link-item">{{ 'dont_have_an_account' | translate }} <b (click)="registerPage()">{{ 'sing_up' | translate }}</b></div>-->
+        <!--</div>-->
+    </div>
+       
+    
+</ion-content>

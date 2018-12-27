@@ -1,0 +1,43 @@
+<ion-header class="clear-bg-header">
+  <ion-navbar>
+      <ion-title>
+        {{ 'my_profile' | translate }}
+      </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="clear-bg">
+   <div class="es-60"></div>
+   <div class="border-top"></div>
+   <div class="es-45"></div>
+   <div class="account-content">
+    <div class="img-avatar" (click)="openActionSheet()">
+       <div class="bg-av" *ngIf="accountData.avatar == null || accountData.avatar == ''" [ngStyle]="{'background-image':'url(assets/imgs/user_avatar.png)'}"></div>
+       <div class="bg-av" *ngIf="accountData.avatar" [ngStyle]="{'background-image':'url(' + accountData.avatar + ')'}">
+       </div>
+    </div>
+    <div class="es-30"></div>
+    <form class="account-form" [formGroup]="accountForm" novalidate (ngSubmit)="changeData(accountForm)">
+      <div class="form-field-wrap">  
+        <input type="text" placeholder="Nickname" [(ngModel)]="accountData.first_name" formControlName="accountName" required>
+        <div *ngIf="errorValid && accountForm.controls.accountName.hasError('required')" class="err-field">
+          <div class="form-err">{{ 'field_required' | translate }}</div>
+        </div>
+      </div>
+      <div class="form-field-wrap">
+        <input type="email" placeholder="Email address" [(ngModel)]="accountData.email" formControlName="accountEmail" required>
+        <div *ngIf="errorValid && accountForm.controls.accountEmail.hasError('required')" class="err-field">
+          <div class="form-err">{{ 'field_required' | translate }}</div>
+        </div>
+        <div *ngIf="errServer" class="err-field">
+          <div class="form-err">{{errServer}}</div>
+        </div>
+      </div>
+       <div class="es-15"></div>
+        <div class="button-link">
+            <input type="submit">
+            {{ 'save' | translate }}
+        </div>
+    </form>
+   </div>    
+</ion-content>

@@ -1,0 +1,65 @@
+<ion-menu [content]="content" classs="menu-list-content" [swipeEnabled]="false" type="reveal">
+  
+  <ion-content>
+    <div class="header-menu-list">
+       <div class="img-home" menuToggle>
+           <img src="assets/imgs/icon_home.png" alt="">
+       </div>
+        <span class="title">{{ 'settings' | translate }}</span>
+    </div>
+       <ul class="menu-list">
+           <li (click)="openPage1()">
+              <div class="lk">
+               <span class="img"><img src="assets/imgs/account_icon_1.png" alt=""></span>
+               <span class="txt">{{ 'my_profile' | translate }}</span>
+              </div>   
+           </li>
+           <li (click)="openPage2()" *ngIf="reportPage">
+              <div class="lk">
+               <span class="img"><img src="assets/imgs/account_icon_3.png" alt=""></span>
+               <span class="txt">{{ 'reports' | translate }}</span>
+              </div>   
+           </li>
+           <li (click)="openPage3()">
+              <div class="lk">
+               <span class="img"><img src="assets/imgs/account_icon_4.png" alt=""></span>
+               <span *ngIf="!cardExist">
+                   <span class="txt">{{ 'add_credit_card' | translate }}</span>
+               </span>
+               <span *ngIf="cardExist">
+                   <span class="txt">{{ 'ending' | translate }}<b>{{cardNumb}}</b></span>
+                   <span class="expire">
+                       <span *ngIf="cardExpired">{{ 'expired' | translate }}</span>
+                   </span>
+               </span>
+              </div>   
+           </li>
+           <li (click)="openPage4()">
+              <div class="lk">
+               <span class="img"><img src="assets/imgs/account_icon_5.png" alt=""></span>
+               <span class="txt">{{ 'security' | translate }}</span>
+              </div>   
+           </li>
+           <li (click)="openPage5()">
+              <div class="lk">
+               <span class="img"><img src="assets/imgs/account_icon_6.png" alt=""></span>
+               <span class="txt">{{ 'tutorial' | translate }}</span>
+              </div>   
+           </li>
+           <li (click)="openPage6()">
+              <div class="lk">
+               <span class="img"><img src="assets/imgs/account_icon_10.png" alt=""></span>
+               <span class="txt">{{ 'language' | translate }}</span>
+              </div>   
+           </li>
+       </ul>
+       
+  </ion-content>
+  <ion-footer class="menu-footer">
+      <ion-toolbar>
+          <div class="button-link" (click)="logout()">{{ 'logout' | translate }}</div>
+      </ion-toolbar>
+  </ion-footer>
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="true" ></ion-nav>

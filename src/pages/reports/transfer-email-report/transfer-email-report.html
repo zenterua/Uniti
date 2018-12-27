@@ -1,0 +1,79 @@
+<ion-header class="main-bg-color">
+  <ion-navbar>
+      <ion-title>
+          <span class="title-overflow">{{'transfer_recipient' | translate}}</span>
+          <div class="right-align">
+              <span class="exit-link type-3" (click)="exportTransferEmailReport()">
+                <div class="align-v">
+                   <img src="assets/imgs/download.png" alt="">
+                 </div>
+              </span>
+          </div>
+      </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="clear-bg" #content>
+   <div class="es-60"></div>
+   <div class="border-top col-2"></div>
+   <div class="main-bg-content">
+     <div class="es-20"></div>
+     <div class="credit-time-filter">
+       <div class="form-field-wrap">
+        <div class="select-field-arrow"></div>
+            <select class="select-field lcase" [(ngModel)]="filterEmail" (ngModelChange)="getEmailTransfers($event)">
+                <option value="0" disabled selected>{{'select_email' | translate}}</option>
+                <option *ngFor="let t of emailArr" [ngValue]="t">{{t}}</option>
+            </select>
+       </div>
+     </div>
+     <div class="circle-chart align-flex">
+         <div class="left-side">
+            <canvas #circleChartEmail class="canvas-elem" width="120" height="120"></canvas>
+            <div class="percentage">
+                {{ totalCredits | number}}
+                <b>{{'total_credits' | translate}}</b>
+            </div>
+         </div>
+         <div class="right-side">
+           <div class="legend-item type-1">
+             <div class="number-point">{{creditActivatedEmailNumber}}</div>
+             <span>{{'activated_credits_rep' | translate}}</span>
+           </div>
+           <div class="legend-item type-2">
+             <div class="number-point">{{creditUsedEmailNumber}}</div>
+             <span>{{'used_credits_rep' | translate}}</span>
+           </div>
+         </div>
+     </div>
+     <div class="es-20"></div>
+   </div>
+
+   <div class="chart-content">
+     <div class="es-20"></div>
+       <ion-list class="chart-table" *ngIf="noReportsEmail == false">
+         <ion-item class="report-th">
+           <div class="report-td">{{'when' | translate }}</div>
+           <div class="report-td">{{'amount' | translate }}</div>
+           <div class="report-td">{{'type' | translate }}</div>
+         </ion-item>
+         <ion-item *ngFor="let item of resultArrEmail">
+           <div class="report-td">{{item.date | date:'yyyy/MM/dd h:mm a'}}</div>
+           <div class="report-td">{{item.amount | number}}</div>
+           <div class="report-td tt">
+             <span *ngIf="item.type == 'active'">{{'active' | translate }}</span>
+             <span *ngIf="item.type == 'passive'">{{'inactive' | translate }}</span>
+           </div>
+         </ion-item>
+       </ion-list>
+
+     <div class="es-30"></div>
+
+      <div class="align-flex text-center" *ngIf="noReportsEmail">
+        <div>
+          <div class="es-10"></div>
+          <h2 class="h2">{{'no_reports' | translate }}</h2>
+        </div>
+      </div>
+   </div>
+</ion-content>

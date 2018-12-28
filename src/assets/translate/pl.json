@@ -234,7 +234,7 @@
      "pass_placeholder_3":"Potwierdź hasło",
      "active_your_credit":"aktywuj kredyty",
      "no_credits_to_transfer":"Nie masz aktywnych kredytów",
-     "your_active_1h_left":"Twoje aktywne kredyty wygasną za mniej niż godzinę",
+     "your_active_3min_left":"Twoje aktywne kredyty wygasają w mniej niż 3 minuty",
 	 "interrupt_open_group":{
 	   "txt_1":"Połączenie internetowe zostało przerwane.",
 	   "txt_2":"Otworzyć ponownie Grupę ",

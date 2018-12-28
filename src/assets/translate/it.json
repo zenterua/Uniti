@@ -232,7 +232,7 @@
 "pass_placeholder_3":"Conferma password",
 "active_your_credit":"attivare i crediti",
 "no_credits_to_transfer":"Non hai crediti attivi disponibili",
-"your_active_1h_left":"i tuoi crediti attivi stanno per terminare in meno di un ora",
+"your_active_3min_left":"i tuoi crediti attivi stanno in meno di un'ora",
 "interrupt_open_group":{
   "txt_1":"Internet connection was interrupted.",
   "txt_2":"Re-Open your Group",

@@ -175,10 +175,7 @@ export class HomePage {
       this.connection.session = {audio: true,video: false};
       this.connection.mediaConstraints = {audio: true,video: false};
       this.connection.bandwidth = {audio: 6};
-      console.log(this.connection.bandwidth);
-
       this.connection.sdpConstraints.mandatory = {OfferToReceiveAudio: true,OfferToReceiveVideo: false};
-
       let containerAudio = this.audioPlay.nativeElement;
       let fullchat = this.fullchat.nativeElement;
       let voicechat = this.voicechat.nativeElement;
@@ -303,12 +300,10 @@ export class HomePage {
         }, 1000);
 
         if( event.iceConnectionState == 'disconnected' && event.extra.roomAdmin == window.localStorage.getItem('room_name') && event.extra.close !== 'closed') {
-          console.log('onPeerStateChanged');
           setTimeout(() => {
             var z = 0;
             this.connection.peers.getAllParticipants().forEach((userid)=> {
               var admin = this.connection.peers[userid].extra.roomAdmin;
-              console.log(admin);
 
               if(admin == this.connection.sessionid) {
                 z = 1;
@@ -409,7 +404,6 @@ export class HomePage {
       };
 
       this.connection.onstream = (e)=> {
-        console.log('stream start');
         let mediaElement = e.mediaElement;
         containerAudio.appendChild(mediaElement);
         setTimeout(function(){
@@ -431,13 +425,10 @@ export class HomePage {
       };
 
       this.connection.onRoomFull = function(roomid){
-        console.log('room full');
         fullchat.classList.add('show-elem');
       };
 
       this.connection.onstreamended = function(e){
-        console.log('stream end');
-
         let mediaElement:any = document.getElementById(e.streamid);
 
         fullchat.classList.remove('show-elem');
@@ -740,7 +731,6 @@ export class HomePage {
           this.lockedUsers.map( (topUser) => {
             this.users.map( ( user, i ) => {
               if ( user.id == topUser.id ) {
-                console.log(this.userItem.nativeElement.children[i]);
                 this.userItem.nativeElement.children[i].classList.add('lock');
               }
             }) ;
@@ -1437,7 +1427,6 @@ export class HomePage {
   }
 
   openRoom(room){ // create room
-    console.log('create room');
     let code = {code:room},
         checkCreateRoomConnect,
         createRoomConnectProblem,
@@ -1566,7 +1555,6 @@ export class HomePage {
             joinToRoom.dismiss();
           });
         }else{
-          console.log('join room');
           window.localStorage.setItem('Group_listener', '1');
           this.api.deleteChatRoom().subscribe((data:any)=>{
             clearTimeout(checkRoomConnect);
@@ -1631,7 +1619,6 @@ export class HomePage {
 
   /* Admin close group ( X BUTTON ) */
   exitCreateChat(){
-    console.log('close chat room');
     this.translate.get('want_to_exit_group').subscribe((val)=>{
       let exitFromChat = this.alertCtrl.create({
         title: val.txt1,
@@ -1653,7 +1640,6 @@ export class HomePage {
   }
 
   exitCreateChatMethod() {
-    console.log('close chat room method');
     this.api.deleteChatRoom().subscribe((data)=>{
       this.clearTimer();
       this.openRoomShow = false;
@@ -1735,10 +1721,10 @@ export class HomePage {
           let endTime:any = new Date(data.expire*1000);
           let expiredTime = endTime - n;
           let endMin = Math.floor(expiredTime);
-          let end5Min = endMin - 3600000;
+          let end5Min = endMin - 190000;
           if (end5Min > 0) {
             this.timeLess = setTimeout(()=>{
-              this.translate.get('your_active_1h_left').subscribe((val)=>{
+              this.translate.get('your_active_3min_left').subscribe((val)=>{
                 this.localNotifications.schedule({
                   id:1,
                   title:val,
@@ -1755,8 +1741,19 @@ export class HomePage {
           }
           if (endMin >= 0){
             this.timeEnd = setTimeout(()=>{
-              this.activeCredits = 0;
-              this.stopToVoiceChat();
+              this.api.infoCredits().subscribe((data)=>{
+                if (data.status == 'OK' && data.error == false) {
+                  this.activeCredits = data.active;
+                  this.allCredits = data.passive;
+                  if ( this.activeCredits <= 0 ) {
+                    this.stopToVoiceChat();
+                  } else {
+                    setTimeout(() => {
+                      this.ifTimeLeft();
+                    }, 1000);
+                  }
+                }
+              });
             }, endMin);
           }
         }
@@ -1844,7 +1841,6 @@ export class HomePage {
 
   stopToVoiceChat(){
     if (this.record == true) {
-      console.log('stop speak voice chat');
       this.checkVoice = true;
       this.numberVoiceChatUsers = 0;
       clearTimeout(this.timeEnd);
@@ -1865,13 +1861,11 @@ export class HomePage {
   checkVoiceChatOpen(){
     let room = window.localStorage.getItem('room_name');
     let VoiceElem = this.voicechat.nativeElement;
-    console.log(room);
     if (room) {
       clearInterval(this.chekRoomExist);
       this.chekRoomExist = setInterval(()=>{
         this.connection.checkPresence(room, (isRoomExist, roomid) => {
           if (isRoomExist) {
-            console.log('isRoomExist' , isRoomExist);
             VoiceElem.classList.add('open');
 
             if ( this.tourGuidSpeakNotifi ) {
@@ -1919,7 +1913,6 @@ export class HomePage {
   /*STOP JOIN VOICE CHAT*/
 
   stopFromVoiceChat(){
-    console.log('stop listen voice chat');
     if (this.voiceActive == true){
       this.voiceActive = false;
     }
@@ -1939,7 +1932,6 @@ export class HomePage {
   sendMessAll(){
     if ( this.message !== '' ) {
       let messageSendDate = Math.random().toString(32).slice(-6);
-      console.log(messageSendDate);
       this.checkSendMessage = false;
       this.messages.push({text: this.message, from:this.userData.username, date: new Date()});
 
@@ -1981,7 +1973,6 @@ export class HomePage {
           }
         });
         if ( checkNotSendedMsg ) {
-          console.log('notSended');
           this.api.checkAllUsers({'code': window.localStorage.getItem('room_name')}).subscribe(data => {
             if ( window.localStorage.getItem('Group_Initiator') == '1' ) { //admin
               let myMessages = data.history.filter(user => {
@@ -1989,9 +1980,6 @@ export class HomePage {
                   return user
                 }
               });
-              console.log(this.messages.length, myMessages.length);
-              console.log('------------------>>>>>>', this.messages);
-              console.log('------------------>>>>', myMessages);
               if ( this.messages.length == myMessages.length ) {
                 Object.keys(allMsg).forEach((key) => {
                   if ( allMsg[key].querySelector('.message').hasAttribute('data-send') && allMsg[key].querySelector('.message').getAttribute('data-send') == 'notSended' ) {
@@ -2075,7 +2063,6 @@ export class HomePage {
 
       if ( privateChatMessages ) { // check if privateMessages not empty
         privateChatMessages.forEach( (user) => { /// private messages
-          console.log(user);
           if ( user.event == "private_message" ) {
             this.messages.push({text: user.value, from:this.nickname, date: new Date(user.date * 1000), toUserId: this.userId});
           } else if ( user.event == "user_message" ) {
@@ -2111,14 +2098,12 @@ export class HomePage {
 
       this.messages.push({text: this.messageAdmin, from:this.userData.username, date: new Date(), toUserId: this.userId});
       this.socket.emit('private_message', {userId: this.userId, msgAdmin: this.messageAdmin} , (data) => {
-        console.log('private', data);
          this.checkAdminSendMessage = true;
         let allMsg = this.myAdminMessage.nativeElement.children;
         let lastMsg = this.myAdminMessage.nativeElement.children[this.messages.length -1];
         lastMsg.querySelector('.my_message').setAttribute('data-send', 'sended');
 
         Object.keys(allMsg).forEach((key) => {
-          console.log(allMsg[key].querySelector('.message'));
           if ( allMsg[key].querySelector(".message") != null && allMsg[key].querySelector('.message').hasAttribute('data-send') && allMsg[key].querySelector('.message').getAttribute('data-send') == 'notSended' ) {
             allMsg[key].querySelector('.message').setAttribute('data-send', 'sended');
           }
@@ -2252,7 +2237,6 @@ export class HomePage {
   }
 
   checkRoomlen(val) {
-    console.log(val);
     if ( val.length > 4) {
       this.room_join = this.room_join.substr(0, 4)
     }

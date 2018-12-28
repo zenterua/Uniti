@@ -233,7 +233,7 @@
  "pass_placeholder_3":"Confirmar contraseña", 
  "active_your_credit":"activar creditos",
  "no_credits_to_transfer":"No tienes créditos activos para transferir",
- "your_active_1h_left":"Sus créditos activos caducarán en menos de 1 hora",
+ "your_active_3min_left":"Sus créditos activos caducarán en menos de 3 minutos.",
  "interrupt_open_group":{
   	"txt_1":"Se interrumpió la conexión a internet",
   	"txt_2":"Vuelva a abrir su Grupo",

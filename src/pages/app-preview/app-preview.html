@@ -1,9 +1,9 @@
 <ion-content>
   <div class="homeTutorial">
     <div class="es-10"></div>
-      <div>{{proximityStates | json }}</div>
-    <div>{{test | json }}</div>
-      <div>{{ test2 | json }}</div>
+      <!--<div>{{proximityStates | json }}</div>-->
+    <!--<div>{{test | json }}</div>-->
+      <!--<div>{{ test2 | json }}</div>-->
     <ion-slides pager loop class="paginationWhite">
 
       <ion-slide>
@@ -107,8 +107,6 @@
         </ion-col>
         <ion-col col-sm-6 col-12>
           <div class="button-link btnStyle2" (click)="pushLoginPage();">{{ 'alreadyUsed' | translate }}</div>
-          <button (click)="testBtn();" style="width: 200px; height: 50px;">ON</button>
-          <button (click)="testBtn2();" style="width: 200px; height: 50px;">OFF</button>
         </ion-col>
       </ion-row>
     </ion-grid>

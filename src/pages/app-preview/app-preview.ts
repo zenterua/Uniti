@@ -57,13 +57,6 @@ export class AppPreviewPage {
     this.navCtrl.push(LoginPage);
   }
 
-  testBtn() {
-
-
-  }
-  testBtn2() {
-
-  }
 }
 
 

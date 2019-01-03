@@ -5,7 +5,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { TooltipsModule } from 'ionic-tooltips';
-
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
@@ -23,8 +22,7 @@ import { ReportsPasswordPage } from '../pages/reports/password-report/password-r
 import { ReportsPurchaseEmailPage } from '../pages/reports/transfer-email-report/transfer-email-report';
 import { ReportsTransferMenu } from '../pages/reports/tranfer-menu/tranfer-menu';
 import { TutorialPage } from '../pages/tutorial/tutorial'; 
-import { LanguagePage } from '../pages/language/language'; 
-
+import { LanguagePage } from '../pages/language/language';
 import { AuthInterceptor } from '../pages/services/auth.inceptor';
 import { AuthService } from '../pages/services/auth.service';
 import { ApiDataService } from '../pages/services/api.service';
@@ -33,7 +31,6 @@ import { DataUpdateService } from '../pages/services/data.service';
 import { ActiveCreditsVal } from '../pages/services/active.number';
 import { logoutService } from '../pages/services/logout.service';
 import { languageService } from '../pages/services/language.service';
- 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
@@ -48,7 +45,6 @@ import { Globalization } from '@ionic-native/globalization';
 import { AppRate } from '@ionic-native/app-rate';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Network } from '@ionic-native/network';
-
 import { OnlyNumber } from '../pages/pipe/number/number.pipe';
 import { UniqueArray } from '../pages/pipe/number/unique.pipe';
 import { SumPipe } from '../pages/pipe/number/summ.pipe';
@@ -56,7 +52,6 @@ import { OrderBy } from '../pages/pipe/number/orderby.pipe';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { AppPreviewPage } from '../pages/app-preview/app-preview';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { Sensors } from '@ionic-native/sensors';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/translate/', '.json');
@@ -148,7 +143,6 @@ export function createTranslateLoader(http: HttpClient) {
     ScreenOrientation,
     logoutService,
     languageService,
-    Sensors,
     {provide: '_OPTIONS_', useValue: {
     transports: ['websocket'],
     query: {token: window.localStorage.getItem('authUniti'),

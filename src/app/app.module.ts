@@ -52,6 +52,7 @@ import { OrderBy } from '../pages/pipe/number/orderby.pipe';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { AppPreviewPage } from '../pages/app-preview/app-preview';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { messageCounterService } from "../pages/services/messageCounte.services";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/translate/', '.json');
@@ -129,7 +130,7 @@ export function createTranslateLoader(http: HttpClient) {
     Clipboard, 
     FingerprintAIO,
     File,
-	  Camera,
+    Camera,
     SocketIo,
     Keyboard,
     DataUpdateService, 
@@ -138,11 +139,12 @@ export function createTranslateLoader(http: HttpClient) {
     AppRate, 
     ActiveCreditsVal,
     LocalNotifications,   
-	  Network,
+    Network,
     AndroidPermissions,
     ScreenOrientation,
     logoutService,
     languageService,
+    messageCounterService,
     {provide: '_OPTIONS_', useValue: {
     transports: ['websocket'],
     query: {token: window.localStorage.getItem('authUniti'),

@@ -63,7 +63,7 @@ button.button-link {width: 100%;}
 .img-align {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); max-width: 30px;}
 .button-open.type-2 {width: 45px; height: 45px; border-radius: 50%;}
 .button-open.type-2 img {max-width: 30px;}
-.button-open .numb {position: absolute; width: 22px; height: 22px; border-radius: 50%; text-align: center;color: #fff; background: #073b4c; font-size: 13px; font-weight: 700; line-height: 22px; top: -5px; right: -9px;}
+.button-open .numb {position: absolute; z-index: 2; min-width: 22px; height: 22px; border-radius: 50%; text-align: center;color: #fff; background: #073b4c; font-size: 13px; font-weight: 700; line-height: 22px; top: -5px; right: -13px;}
 .button-sm {position: relative; width: 35px; height: 35px; min-width: 35px; min-height: 35px; border-radius: 50%; background: #073b4c; text-align: center; display: inline-block; margin: 0 2px;}
 .button-sm img {position: absolute; left: 49%; top: 50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); max-width: 18px;}
 .button-sm.no-active {background: #c5c5c5;}

@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { NavController, Platform, ToastController, AlertController, ModalController, ViewController, LoadingController } from 'ionic-angular';
+import { NavController, Platform, ToastController, AlertController, ModalController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs/Rx';
 import 'rxjs/add/observable/interval';
@@ -20,6 +20,7 @@ import { AccountPage } from '../account/account';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { logoutService } from '../services/logout.service';
 import { languageService } from '../services/language.service';
+import {messageCounterService} from "../services/messageCounte.services";
 
 export declare var RTCMultiConnection: any;
 
@@ -117,6 +118,7 @@ export class HomePage {
   checkAdminSendMessage: boolean = false;
   checkNetError:boolean = true;
   keyCheckExist: boolean = false;
+  privateChatMessages: any = [];
 
   @ViewChild('audioPlay') audioPlay: ElementRef;
   @ViewChild('openKeyField1') openKeyField1;
@@ -141,7 +143,6 @@ export class HomePage {
               public modalCtrl: ModalController,
               private faio: FingerprintAIO,
               private api: ApiDataService,
-              public viewCtrl: ViewController,
               private dataUpdateService:DataUpdateService,
               public loadingCtrl: LoadingController,
               private backgroundMode: BackgroundMode,
@@ -152,7 +153,8 @@ export class HomePage {
               private localNotifications: LocalNotifications,
               private network: Network,
               private logoutService: logoutService,
-              private languageService: languageService) {
+              private languageService: languageService,
+              private msgCountService: messageCounterService) {
     this.socket = new SocketIo({
       query: {
         token: window.localStorage.getItem('authUniti'),
@@ -437,6 +439,13 @@ export class HomePage {
         }
 
       };
+
+      setTimeout(() => {
+        this.msgCountService.sendMsgCount().subscribe(data => {
+          this.messCountAdm = data;
+        });
+        this.msgCountService.messagesCountOnLoad(this.users);
+      },1000);
     });
 
     this.transferEmail = new FormGroup({
@@ -540,7 +549,7 @@ export class HomePage {
     this.getMessages().subscribe((message:any) => {
       if ( window.localStorage.getItem('room_name') != null ) {
         this.messages.push(message);
-
+        this.messCountAdm ++;
         if (this.messChatToAll == false){
           this.messCount ++;
           this.localNotifications.schedule({
@@ -551,7 +560,6 @@ export class HomePage {
           });
         }
         if (this.messChatToAdmin == false){
-          this.messCountAdm ++;
           this.localNotifications.schedule({
             id:1,
             title:message.from,
@@ -561,7 +569,7 @@ export class HomePage {
         }
         if (this.isAdmin == true) {
           this.idUser = message.id;
-          if (this.users && this.messChatToAdmin == false) {
+          if (this.users) {
 
             this.users.forEach( (user) => {
               if ( user.id == this.idUser) {
@@ -747,7 +755,6 @@ export class HomePage {
     });
 
     this.chatTimeFormatMsg();
-
   }
 
   /* EXIT APP */
@@ -1427,6 +1434,7 @@ export class HomePage {
   }
 
   openRoom(room){ // create room
+    window.localStorage.removeItem('messageCount');
     let code = {code:room},
         checkCreateRoomConnect,
         createRoomConnectProblem,
@@ -1500,6 +1508,7 @@ export class HomePage {
   /* JOIN TO CHAT ROOM */
 
   joinRoom(){
+    window.localStorage.removeItem('messageCount');
     this.joinRoomChat = true;
     this.createRoomChat = false;
     setTimeout(()=> this.openKeyField5.nativeElement.focus(), 200);
@@ -1926,7 +1935,6 @@ export class HomePage {
 
   openMessChatAll(){
     this.messChatToAll = true;
-    //setTimeout(()=> this.chattoalluser.nativeElement.focus(), 200);
   }
 
   sendMessAll(){
@@ -1968,7 +1976,7 @@ export class HomePage {
             checkNotSendedMsg = false;
 
         Object.keys(allMsg).forEach( (key) => {
-          if ( allMsg[key].querySelector('.my_message').getAttribute('data-send') == 'notSended' ) {
+          if ( allMsg[key].querySelector('.my_message') != null && allMsg[key].querySelector('.my_message').getAttribute('data-send') == 'notSended' ) {
             checkNotSendedMsg = true;
           }
         });
@@ -2005,7 +2013,7 @@ export class HomePage {
   openChatWithAdmin(){
     this.messChatToAll = true;
     // setTimeout(()=> this.chattoalluser.nativeElement.focus(), 200);
-    this.messCount = 0;
+    // this.messCount = 0;
     var element = document.getElementById('scrollToBottom');
     setTimeout(()=>{element.scrollIntoView(true)},500);
   }
@@ -2013,8 +2021,8 @@ export class HomePage {
   closeToUserChat(){
     this.messChatToAdmin = false;
     this.openUsersChatList = false;
-    this.messCountAdm = 0;
     this.layerClose = false;
+    this.msgCountService.recountLocalMessages(this.userId, this.messCountAdm, this.users);
   }
 
   /* OPEN USERS */
@@ -2023,7 +2031,7 @@ export class HomePage {
     this.openUsersChatList = !this.openUsersChatList;
     this.layerClose = !this.layerClose;
     if (this.openUsersChatList == true){
-      this.messCountAdm = 0;
+      // this.messCountAdm = 0;
     }
   }
 
@@ -2036,33 +2044,26 @@ export class HomePage {
       if ( data.status == 'OK' ) {
         usersOnGroupArray.push(data.history);
         this.globalHistoryChat = usersOnGroupArray;
-
       }
 
-    });
+      this.chatName = userWithChat.first_name;
+      this.userId = userWithChat.id;
+      this.thisPrivateChatUser = this.users.filter( (user) => {
+        return user.id == this.userId;
+      });
 
-    this.chatName = '';
-    this.chatName = userWithChat.first_name;
-    this.userId = userWithChat.id;
-    this.thisPrivateChatUser = this.users.filter( (user) => {
-      return user.id == this.userId;
-    });
+      setTimeout(()=> this.chattoprivatuser.nativeElement.focus(), 200);
+      this.messChatToAdmin = true;
+      this.thisPrivateChatUser[0].chat = false;
+      this.privateChatMessages = [];
+      this.messages = [];
 
-    setTimeout(()=> this.chattoprivatuser.nativeElement.focus(), 200);
-    this.messCountAdm = 0;
-    this.messChatToAdmin = true;
-    this.thisPrivateChatUser[0].chat = false;
-    let privateChatMessages = [];
-    this.messages = [];
-
-
-    setTimeout( () => {
-      privateChatMessages = this.globalHistoryChat[0].filter( (user) => {
+      this.privateChatMessages = this.globalHistoryChat[0].filter( (user) => {
         return  user.event == "user_message" || user.event == "private_message" && user.user_id == this.userId && user.event != '';
       });
 
-      if ( privateChatMessages ) { // check if privateMessages not empty
-        privateChatMessages.forEach( (user) => { /// private messages
+      if ( this.privateChatMessages ) { // check if privateMessages not empty
+        this.privateChatMessages.forEach( (user) => { /// private messages
           if ( user.event == "private_message" ) {
             this.messages.push({text: user.value, from:this.nickname, date: new Date(user.date * 1000), toUserId: this.userId});
           } else if ( user.event == "user_message" ) {
@@ -2088,7 +2089,14 @@ export class HomePage {
 
       }
       this.myAdminMessage.nativeElement.setAttribute('data-loadChat', 'loadingFromBase');
-    }, 300);
+      this.msgCountService.sendMsgCount().subscribe(data => {
+        this.messCountAdm = data;
+      });
+      this.msgCountService.messageCounter(this.userId, this.messCountAdm);
+
+    });
+
+
 
   }
 
@@ -2125,7 +2133,7 @@ export class HomePage {
     }
   }
 
-  lockUser(i, item){
+  lockUser(i){
     this.translate.get('lock_user').subscribe((val)=>{
       let lockUser = this.alertCtrl.create({
         title: val,
@@ -2148,7 +2156,7 @@ export class HomePage {
     });
   }
 
-  unlockUser(i, item){
+  unlockUser(i){
     this.translate.get('unlock_user').subscribe((val)=>{
       let unlockUser = this.alertCtrl.create({
         title: val,
@@ -2225,7 +2233,6 @@ export class HomePage {
 
           if (this.activeUserInGroupLen >= 1) {
             this.groupChatStart = true;
-            this.messCountAdm = 0;
           } else {
             this.groupChatStart = false;
           }
@@ -2279,30 +2286,12 @@ export class HomePage {
     return observable;
   }
 
-  getSocketError() {
-    let observable = new Observable(observer => {
-      this.socket.on('error', (data) => {
-        observer.next(data);
-      });
-    })
-    return observable;
-  }
-
-  getSocketException() {
-    let observable = new Observable(observer => {
-      this.socket.on('exception', (data) => {
-        observer.next(data);
-      });
-    })
-    return observable;
-  }
-
   onSocketDisconnect() {
     let observable = new Observable(observer => {
       this.socket.on('disconnect', (data) => {
         observer.next(data);
       });
-    })
+    });
     return observable;
   }
 
@@ -2311,7 +2300,7 @@ export class HomePage {
       this.socket.on('chat_delete', (data) => {
         observer.next(data);
       });
-    })
+    });
     return observable;
   }
 
@@ -2320,36 +2309,10 @@ export class HomePage {
       this.socket.on('transfer', (data) => {
         observer.next(data);
       });
-    })
+    });
     return observable;
   }
 
-  onAdminLeft() {
-        let observable = new Observable(observer => {
-          this.socket.on('admin_left', (data) => {
-            observer.next(data);
-          });
-        })
-        return observable;
-    }observer
-
-  onAdminJoin() {
-    let observable = new Observable(observer => {
-      this.socket.on('list_admin', (data) => {
-        observer.next(data);
-      });
-    })
-    return observable;
-  }
-
-  onAdminDisconect() {
-    let observable = new Observable(observer => {
-      this.socket.on('admin_disconect', (data) => {
-        observer.next(data);
-      });
-    })
-    return observable;
-  }
 
   /* FUNCTION */
 

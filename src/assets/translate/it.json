@@ -326,5 +326,6 @@
   "badNetwork": "Network connection problem. It seems you have a bad connection to the network. Please try again later.",
   "badNetWorkCreditError": "We are trying to send the Credits, please wait",
   "badNetWorkRoomError": "We are trying to connect to the Group, please wait",
-  "badNetWorkCreateRoomError": "We are trying to create the Group, please wait"
+  "badNetWorkCreateRoomError": "We are trying to create the Group, please wait",
+  "session_end": "Session timeout, please login again"
 }

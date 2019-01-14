@@ -12,9 +12,7 @@ const apiUrl = 'http://uniti.redstone.media:3000';
 export class AuthService {
 	
     isLoggedin:boolean;
-	AuthToken;
-    tId;
-	
+	  AuthToken;
     constructor(private http: HttpClient) {
         this.isLoggedin = false;
         this.AuthToken = null;

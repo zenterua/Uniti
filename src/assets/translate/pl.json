@@ -332,5 +332,6 @@
   "badNetwork": "Próbujemy wysłać Kredyty, prosimy chwilkę poczekać",
   "badNetWorkCreditError": "Próbujemy wysłać Kredyty, prosimy chwilkę poczekać",
   "badNetWorkRoomError": "Próbujemy połączyć z Grupą, prosimy chwilkę poczekać",
-  "badNetWorkCreateRoomError": "Próbujemy stworzyć Grupę, proszę czekać"
+  "badNetWorkCreateRoomError": "Próbujemy stworzyć Grupę, proszę czekać",
+  "session_end": "Session timeout, please login again"
 }

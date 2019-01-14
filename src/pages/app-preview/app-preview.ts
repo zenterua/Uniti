@@ -1,16 +1,16 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NavController, Slides} from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import {RegisterPage} from "../register/register";
 import {LoginPage} from "../login/login";
 import { Platform } from 'ionic-angular';
 
+
 @Component({
   selector: 'page-app-preview',
-  templateUrl: 'app-preview.html',
+  templateUrl: 'app-preview.html'
 })
 export class AppPreviewPage {
-
   @ViewChild(Slides) slides: Slides;
 
 
@@ -18,7 +18,6 @@ export class AppPreviewPage {
               public navCtrl: NavController,
               public translate: TranslateService) {
     platform.ready().then( () =>{
-
     });
   }
   ionViewDidLoad() {

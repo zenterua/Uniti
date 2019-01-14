@@ -30,7 +30,16 @@ export class AccountPage {
     avatarImgSmSize:any = '';
     isDataChange:boolean = false;
     
-    constructor( public navCtrl: NavController, private camera: Camera, private file: File, public toastCtrl: ToastController, public actionSheetCtrl: ActionSheetController, private api: ApiDataService, public alertCtrl: AlertController, private dataUpdateService:DataUpdateService, public translate: TranslateService, public loadingCtrl: LoadingController ) {
+    constructor( public navCtrl: NavController,
+								 private camera: Camera,
+								 private file: File,
+								 public toastCtrl: ToastController,
+								 public actionSheetCtrl: ActionSheetController,
+								 private api: ApiDataService,
+								 public alertCtrl: AlertController,
+								 private dataUpdateService:DataUpdateService,
+								 public translate: TranslateService,
+								 public loadingCtrl: LoadingController ) {
         this.accountForm = new FormGroup({
             accountName: new FormControl('', [<any>Validators.required]),
             accountEmail: new FormControl('', [<any>Validators.required])

@@ -34,7 +34,7 @@
                        <img src="assets/imgs/lock.svg" alt="">
                    </span>
                    <input class="simple-input" type="{{ showPassword ? 'text' : 'password'}}" [(ngModel)]="user.password" name="userpass" placeholder="{{'password' | translate}}" formControlName="loginPass" required />
-                 <span class="passToggle" [ngClass]="{'showPass': showPassword === true}" (click)="hidPasswordToggle()">
+                 <span class="passToggle" [ngClass]="{'showPass': showPassword === true}" (click)="hidePasswordToggle()">
                    <img src="assets/imgs/view.svg" alt="">
                    <img src="assets/imgs/hide.svg" alt="">
                  </span>

@@ -126,7 +126,7 @@ export class RegisterPage {
        } 
    };
 
-  hidPasswordToggle() {
+  hidePasswordToggle() {
     this.showPassword = !this.showPassword;
   }
 

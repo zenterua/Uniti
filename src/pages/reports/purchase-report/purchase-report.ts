@@ -232,7 +232,6 @@ export class ReportsPurchasePage {
         date:this.filterDate
       };
       this.api.reportsPurchaseByDate(this.dateObj).subscribe((data)=>{
-        console.log(data);
         if (data.status == 'OK' && data.error == false) {
           if (data.report.length > 0) {
             this.noReports = false;

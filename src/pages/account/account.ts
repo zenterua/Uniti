@@ -198,7 +198,6 @@ export class AccountPage {
               this.avatarImg = 'data:image/jpeg;base64,' + imagePath;
               this.generateFromImage(this.avatarImg, 111, 111, 0.5, data => {
                   this.avatarImgSmSize = data;
-                  console.log(data);
                   this.accountData.avatar = this.avatarImgSmSize;
               });
               let currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
@@ -263,7 +262,6 @@ export class AccountPage {
 		  })
 		  .subscribe((data)=>{
 		  if (data.status == 'OK' && data.error == false) {
-			  console.log(data);
 			  this.saveData();
 		  }
 		 });

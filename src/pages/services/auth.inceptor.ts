@@ -2,27 +2,30 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import * as jwt_decode from "jwt-decode";
-import { App } from "ionic-angular";
-import { LoginPage } from '../login/login';
+import {App} from "ionic-angular";
+import { SplashScreen } from '@ionic-native/splash-screen';
+import {AuthService} from "./auth.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 	tokenEndTime:any;
 	tokenLifeCoun:boolean = true;
 
-	constructor(private appCtrl: App) {}
+	constructor(private splashScreen: SplashScreen) {}
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		let currentUser = localStorage.getItem('authUniti');
 
 		if (currentUser) {
+
 			this.getDecodedAccessToken(currentUser);
 			const currentDate = new Date().getTime();
  			if ( currentDate > this.tokenEndTime.exp * 1000 && this.tokenLifeCoun ) {
- 				this.tokenLifeCoun = false;
-				this.appCtrl.getRootNav().setRoot(LoginPage, {logout:true});
+				this.tokenLifeCoun = false;
 				window.localStorage.setItem('tokenLifeEnd', 'lifeEnd');
 				window.localStorage.removeItem('authUniti');
+				this.splashScreen.show();
+				window.location.reload();
 			} else {
  				this.tokenLifeCoun = true;
 				const authReg = request.clone({

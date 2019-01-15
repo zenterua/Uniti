@@ -90,7 +90,6 @@ export class ReportsTransferPage {
       this.api.exportTransferXml(this.dateObj).finally(()=>{
            loginXml.dismiss();
         }).subscribe((data)=>{
-        console.log(data);
         if (data.error == false && data.status == 'OK'){
           this.translate.get('send_report').subscribe((val)=>{
              this.alertFunc(val);

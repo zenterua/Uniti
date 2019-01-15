@@ -197,7 +197,6 @@ export class ReportsPasswordPage {
       this.percentage = 0;
       if (item.end !== 0) {
          this.errorClose = false;
-         console.log(startDate);
          endDate = item.end * 1000;
          let h = Math.floor(RoomLifeTime / 3600);
          let m = (Math.floor(RoomLifeTime/ 60) - (Math.floor(RoomLifeTime / 3600) * 60));
@@ -263,7 +262,6 @@ export class ReportsPasswordPage {
   }
 
   chatTimeFormatMsg() {
-    console.log(this.globalLang);
     if ( this.globalLang != 'en' ) {
       this.chatMessageFormat = 'MMM d, y, HH:mm:ss';
     } else {

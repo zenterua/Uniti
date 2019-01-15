@@ -1,10 +1,10 @@
-import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {NavController, Slides} from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import {RegisterPage} from "../register/register";
 import {LoginPage} from "../login/login";
 import { Platform } from 'ionic-angular';
-
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 @Component({
   selector: 'page-app-preview',
@@ -16,12 +16,19 @@ export class AppPreviewPage {
 
   constructor(private platform: Platform,
               public navCtrl: NavController,
-              public translate: TranslateService) {
+              public translate: TranslateService,
+              public splashScreen: SplashScreen) {
     platform.ready().then( () =>{
+      if ( window.localStorage.getItem('tokenLifeEnd') != null ) {
+        splashScreen.show();
+        setTimeout(() => {
+          this.navCtrl.push(LoginPage);
+        }, 500);
+
+      }
     });
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AppPreviewPage');
     this.slides.autoHeight = true;
   }
 

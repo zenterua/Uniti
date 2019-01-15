@@ -10,6 +10,7 @@ import 'rxjs/add/operator/finally';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
 import { TranslateService } from '@ngx-translate/core';
 import { SocketIo } from '../services/socket.io.service';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 @Component({
   selector: 'page-login',
@@ -19,8 +20,8 @@ export class LoginPage {
    loginForm: FormGroup;	
    errorLog:boolean = false;
    user:any = {
-	 email: '',
-	 password: ''
+     email: '',
+     password: ''
    };
    serverErr:string = '';    
    emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";  
@@ -36,7 +37,8 @@ export class LoginPage {
               private faio: FingerprintAIO,
               public translate: TranslateService,
               public socket: SocketIo,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              splashScreen: SplashScreen) {
       this.loginForm = new FormGroup({
            loginName: new FormControl('', [<any>Validators.required, <any>Validators.pattern(this.emailPattern)]),
            loginPass: new FormControl('', [<any>Validators.required])
@@ -48,15 +50,15 @@ export class LoginPage {
        }
        if ( window.localStorage.getItem('tokenLifeEnd') != null ) {
          window.localStorage.removeItem('tokenLifeEnd');
-         this.translate.get('session_end').subscribe((val)=>{
+         translate.get('session_end').subscribe((val)=>{
            let toast = this.toastCtrl.create({
              message: val,
              duration: 5000,
              position: 'top'
            });
            toast.present();
+           splashScreen.hide();
          });
-
        }
     });
    }
@@ -106,7 +108,6 @@ export class LoginPage {
   }    
 
   login(form, user) {
-    console.log(user);
     if (form.valid) {
       let loginLoading:any;
       this.translate.get('please_wait').subscribe((val)=>{

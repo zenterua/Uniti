@@ -81,7 +81,6 @@ export class ReportsActivatePage {
       this.api.exportActiveXml(this.dateObj).finally(()=>{
          loginXml.dismiss();
         }).subscribe((data)=>{
-          console.log(data);
           if (data.error == false && data.status == 'OK'){
             this.translate.get('send_report').subscribe((val)=>{
                this.alertFunc(val);
@@ -139,7 +138,6 @@ export class ReportsActivatePage {
         used = +item.used;
         arrRes.push({date: typeDate, day:typeDay, month:typeMonth, year:typeYear, amount: amount, used: used});
       }
-      console.log(arrRes);
       if (this.filterTime == 'year'){
         this.arrFormat = 'MM/yyyy';
         this.groupByStatus(arrRes, 'month');
@@ -205,7 +203,6 @@ export class ReportsActivatePage {
         date:this.filterDate
       };
       this.api.reportsActivateByDate(this.dateObj).subscribe((data)=>{
-        console.log(data);
         if (data.status == 'OK' && data.error == false) {
           if (data.report.length > 0) {
             this.noReports = false;

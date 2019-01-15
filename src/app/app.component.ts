@@ -8,6 +8,7 @@ import { Globalization } from '@ionic-native/globalization';
 import { TranslateService } from '@ngx-translate/core';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { AppPreviewPage } from '../pages/app-preview/app-preview';
+import {languageService} from "../pages/services/language.service";
 
 @Component({
   templateUrl: 'app.html'
@@ -20,16 +21,14 @@ export class MyApp {
   constructor(public platform: Platform,
               private androidPermissions: AndroidPermissions, statusBar: StatusBar, splashScreen: SplashScreen, keyboard: Keyboard,
               public translate: TranslateService,
-              private globalization: Globalization) {
+              private globalization: Globalization,
+              private languageService: languageService) {
     
     platform.ready().then(() => {
        keyboard.hideKeyboardAccessoryBar(false);
        keyboard.disableScroll(false);
        statusBar.styleDefault(); 
        splashScreen.hide();
-
-
-
 
       this.androidPermissions.requestPermissions([
         this.androidPermissions.PERMISSION.CAMERA,
@@ -39,49 +38,16 @@ export class MyApp {
         this.androidPermissions.PERMISSION.ACCESS_WIFI_STATE
       ]);
 
-      if (window.localStorage.getItem('unitiLang') !== null) {
-            let lang = window.localStorage.getItem('unitiLang').toString();
-            translate.setDefaultLang(lang);
-            this.lang_type = 'lang_' + lang;    
-      }else{
-        this.globalization.getPreferredLanguage()
-          .then((res) => {
-					if (res.value == 'pl-US' || res.value == 'pl-PL') {
-						translate.setDefaultLang('pl');
-						this.lang_type = 'lang_pl';
-						window.localStorage.setItem('unitiLang', 'pl');
-					} else if (res.value == 'it-US' || res.value == 'it-IT') {
-            translate.setDefaultLang('it');
-            this.lang_type = 'lang_it';
-            window.localStorage.setItem('unitiLang', 'it');
-          } else if (res.value == 'sp-US' || res.value == 'sp-SP') {
-            translate.setDefaultLang('sp');
-            this.lang_type = 'lang_sp';
-            window.localStorage.setItem('unitiLang', 'sp');
-          } else if (res.value == 'ua-US' || res.value == 'uk-UA') {
-            translate.setDefaultLang('ua');
-            this.lang_type = 'lang_ua';
-            window.localStorage.setItem('unitiLang', 'ua');
-          } else if (res.value == 'ru-US' || res.value == 'ru-UA') {
-            translate.setDefaultLang('ru');
-            this.lang_type = 'lang_ru';
-            window.localStorage.setItem('unitiLang', 'ru');
-          }else{
-						translate.setDefaultLang('en');
-						this.lang_type = 'lang_en';
-						window.localStorage.setItem('unitiLang', 'en');
-					}
-          }).catch(e => {
-              translate.setDefaultLang('en');
-              this.lang_type = 'lang_en';
-              window.localStorage.setItem('unitiLang', 'en');
-          })
-      }
+      this.languageService.getLanguage().subscribe(data => {
+        this.lang_type = data;
+      });
+
+      languageService.languageGlobalization();
 
      if (window.localStorage.getItem('authUniti') !== null && !window.localStorage.getItem('logoutEvent')){
-          this.rootPage = MenuPage;
+        this.rootPage = MenuPage;
      }else{
-          this.rootPage = AppPreviewPage;
+        this.rootPage = AppPreviewPage;
      }
 
     });

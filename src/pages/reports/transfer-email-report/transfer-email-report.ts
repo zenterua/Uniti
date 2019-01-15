@@ -65,7 +65,7 @@ export class ReportsPurchaseEmailPage {
       });
       this.api.exportTransferEmailXml({email:this.filterEmail}).finally(()=>{
         loginXml.dismiss();}).subscribe((data)=>{
-          console.log(data);
+
           if (data.error == false && data.status == 'OK'){
             this.translate.get('send_report').subscribe((val)=>{
                this.alertFunc(val);
@@ -115,7 +115,6 @@ export class ReportsPurchaseEmailPage {
         return previous;
       },{});
       resEmail = Object.keys(groupedCollectionEmail).map(key=>({ type: key, value: groupedCollectionEmail[key]}));
-      console.log(resEmail);
       for (let sum of resEmail) {
         if (sum.type == 'passive'){
            for (let i of sum.value) {
@@ -136,7 +135,6 @@ export class ReportsPurchaseEmailPage {
     getEmailTransfers(e){
       this.resultArrEmail = [];
       this.api.reportsTransferByMail({email:e}).subscribe((data)=>{
-        console.log(data);
         if (data.status == 'OK' && data.error == false) {
           this.noReportsEmail = false;
            this.totalCredits = 0;
@@ -146,7 +144,6 @@ export class ReportsPurchaseEmailPage {
              this.resultArrEmail.push({type:item.type, amount:item.amount, date:new Date(item.date*1000)})
            });
            this.recipientSummary(this.resultArrEmail);
-           console.log(this.content);
           setTimeout(() => {
             this.content.resize();
           }, 500);

@@ -10,12 +10,14 @@ import { languageService } from '../services/language.service';
 export class LanguagePage {
    langModel:string;    
     
-   constructor( public translate: TranslateService, private globalization: Globalization, private languageService: languageService) {
-    if (window.localStorage.getItem('unitiLang') !== null) {
-        let lang = window.localStorage.getItem('unitiLang').toString();
-        translate.setDefaultLang(lang); 
-        this.langModel = lang;
-    }else{
+   constructor( public translate: TranslateService,
+                private globalization: Globalization,
+                private languageService: languageService) {
+     if (window.localStorage.getItem('unitiLang') !== null) {
+      let lang = window.localStorage.getItem('unitiLang').toString();
+      translate.setDefaultLang(lang);
+      this.langModel = lang;
+      }else {
         this.globalization.getPreferredLanguage()
            .then((res) => {
              console.log(res);
@@ -50,14 +52,13 @@ export class LanguagePage {
             this.langModel = 'en';
             translate.setDefaultLang('en');
            })
-       }   
-        
-    }
+      }
+   }
     
     changeLang(e:any){
-        window.localStorage.setItem('unitiLang', e);
-        this.translate.use(e);
-        this.languageService.sendLanguage(e);
+      window.localStorage.setItem('unitiLang', e);
+      this.translate.use(e);
+      this.languageService.sendLanguage(e);
     }
 
 }

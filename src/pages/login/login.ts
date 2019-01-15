@@ -42,24 +42,23 @@ export class LoginPage {
            loginPass: new FormControl('', [<any>Validators.required])
       });
       
-      platform.ready().then(() => {
-         if (window.localStorage.getItem('logoutEvent') == 'islogout' && !this.navParams.get('logout')) {
-            this.touchIdDialog(); 
-         }
-
-         if ( window.localStorage.getItem('tokenLifeEnd') != null ) {
-           window.localStorage.removeItem('tokenLifeEnd');
-           this.translate.get('session_end').subscribe((val)=>{
-             let toast = this.toastCtrl.create({
-               message: val,
-               duration: 5000,
-               position: 'top'
-             });
-             toast.present();
+    platform.ready().then(() => {
+       if (window.localStorage.getItem('logoutEvent') == 'islogout' && !this.navParams.get('logout')) {
+          this.touchIdDialog();
+       }
+       if ( window.localStorage.getItem('tokenLifeEnd') != null ) {
+         window.localStorage.removeItem('tokenLifeEnd');
+         this.translate.get('session_end').subscribe((val)=>{
+           let toast = this.toastCtrl.create({
+             message: val,
+             duration: 5000,
+             position: 'top'
            });
+           toast.present();
+         });
 
-         }
-      });
+       }
+    });
    }
     
    touchIdDialog(){
@@ -86,7 +85,7 @@ export class LoginPage {
   }     
 
   registerPage(){
-      this.navCtrl.push(RegisterPage);
+    this.navCtrl.push(RegisterPage);
   }
 
   forgotPage(){
@@ -102,7 +101,7 @@ export class LoginPage {
            }
         }
       })
-    })
+    });
     return observable;
   }    
 

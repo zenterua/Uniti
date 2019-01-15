@@ -14,28 +14,28 @@ export class AuthService {
     isLoggedin:boolean;
 	  AuthToken;
     constructor(private http: HttpClient) {
-        this.isLoggedin = false;
-        this.AuthToken = null;
+			this.isLoggedin = false;
+			this.AuthToken = null;
     }
     
     storeUserCredentials(token) {
-        window.localStorage.setItem('authUniti', token);
-        this.useCredentials(token);
+			window.localStorage.setItem('authUniti', token);
+			this.useCredentials(token);
     }
     
     useCredentials(token) {
-        this.isLoggedin = true;
-        this.AuthToken = token;
+			this.isLoggedin = true;
+			this.AuthToken = token;
     }
     
     loadUserCredentials() {
-        var token = window.localStorage.getItem('authUniti');
-        this.useCredentials(token);
+			var token = window.localStorage.getItem('authUniti');
+			this.useCredentials(token);
     }
     
-    destroyUserCredentials() {
-        this.isLoggedin = false;
-        this.AuthToken = null;
+		destroyUserCredentials() {
+			this.isLoggedin = false;
+			this.AuthToken = null;
     }
 	
 	authenticated(): boolean {
@@ -47,18 +47,18 @@ export class AuthService {
 	}
     
 	authenticate(user:any): Observable<any> {
-      return this.http.post(apiUrl + '/auth/login', user)
-           .map((data:any) => {
-               if (data && data['token']) {
-                    this.isLoggedin = true;
-                    this.storeUserCredentials(data['token']);
-               } 
-               return data;
-            })
-			.catch((err: HttpErrorResponse):Observable<any> => {
-		        this.isLoggedin = false;
-				let errorMsg = err;
-				return Observable.throw(errorMsg);
+		return this.http.post(apiUrl + '/auth/login', user)
+			 .map((data:any) => {
+				 if (data && data['token']) {
+							this.isLoggedin = true;
+							this.storeUserCredentials(data['token']);
+				 }
+				 return data;
+				})
+		.catch((err: HttpErrorResponse):Observable<any> => {
+			this.isLoggedin = false;
+			let errorMsg = err;
+			return Observable.throw(errorMsg);
 			})
     }
     

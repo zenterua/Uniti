@@ -25,7 +25,11 @@ export class PasswordPage {
 	  }
   }
 	
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private api: ApiDataService, public translate: TranslateService ) {
+  constructor(public navCtrl: NavController,
+							public navParams: NavParams,
+							public alertCtrl: AlertController,
+							private api: ApiDataService,
+							public translate: TranslateService ) {
 	  this.passwordForm = new FormGroup({
 			oldPass: new FormControl('', [<any>Validators.required]),
 			newPass: new FormControl('', [<any>Validators.required]),
@@ -40,11 +44,11 @@ export class PasswordPage {
 	
   alertSend(){
    this.translate.get('password_was_changed').subscribe((val)=>{      
-	 let alert = this.alertCtrl.create({
-	   title: val,
-	   buttons: ['OK']
-	 });
-	 alert.present();
+		 let alert = this.alertCtrl.create({
+			 title: val,
+			 buttons: ['OK']
+		 });
+		 alert.present();
    });
   }
     
@@ -57,28 +61,28 @@ export class PasswordPage {
            }
         }
       })
-    })
+    });
     return observable;
   }    
 	
-  changePassword(form){
-     this.errorValid = false;  
+  changePassword(form) {
+  	this.errorValid = false;
 	  if (form.valid){
-         this.api.changeUserPass(this.pass).subscribe((data)=>{
-            if (data.error == false && data.status == 'OK') {
-               this.alertSend(); 
-            }else{
-               this.serverErrorFunc(data.error_msg).subscribe((err:any)=>{
-                   this.serverErrorFunc(data.error_msg).subscribe((err:any)=>{
-                       let activateErr = this.alertCtrl.create({
-                          title: err,
-                          buttons: ['OK']
-                       });
-                       activateErr.present();
-                  });
-               });    
-            }
-         });
+			 this.api.changeUserPass(this.pass).subscribe((data)=>{
+					if (data.error == false && data.status == 'OK') {
+						 this.alertSend();
+					}else {
+						 this.serverErrorFunc(data.error_msg).subscribe((err:any)=>{
+							 this.serverErrorFunc(data.error_msg).subscribe((err:any)=>{
+								 let activateErr = this.alertCtrl.create({
+										title: err,
+										buttons: ['OK']
+								 });
+								 activateErr.present();
+							});
+						 });
+					}
+			 });
 	  }else{
 		 this.errorValid = true;  
 	  }

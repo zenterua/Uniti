@@ -39,7 +39,7 @@
  "txt1":"Estás transfiriendo ",
  "txt2":" créditos activos para ",
  "txt4":" crédito activo para",
- "txt3":"Cancel"
+ "txt3":"Cancelar"
  },
  "transfer_credits_err2":{
  "txt1":"Estás transfiriendo ",
@@ -138,7 +138,6 @@
  "password_was_changed":"La contraseña ha sido cambiada",
  "i_agree_to":"Estoy de acuerdo con",
  "have_an_account":"Si ya tienes una cuenta",
- "tutorial":"Tutorial",
  "reports_title_1":"Historial de compra de crédito",
  "reports_title_2":"Historial de transferencia de crédito",
  "reports_title_3":"Activación de crédito & Uso",
@@ -146,9 +145,9 @@
  "no_reports":"No tienes reportes para este periodo",
  "active":"Activo",
  "recipient":"Recipiente",
+ "recipients":"recipientes",
  "amount":"Cantidad",
  "type":"Tipo",
- "recipients":"recipientes",
  "used_credits":"Créditos utilizados",
  "activated_credits":"Créditos Activados",
  "total_credits":"creditos totales",
@@ -246,18 +245,15 @@
  "page_1_step_4":"Crear. Este botón te permite crear su Clave de Grupo, que puedes compartir con tu Grupo.La  Clave de Grupo es un código de 4 dígitos",	
  "page_1_step_5":"Unirse. Cada turista puede unirse a un grupo Al presionar este botón y al ingresar una clave de grupo de 4 dígitos recibida de el Guía",	
  "page_1_step_6":"Icono de configuración. Aquí puedes cambiar todos tus configuraciones personales",
-	
  "page_2_step_1":"Audio Usarios. Este contador muestra cuántos  Miembros del Grupo actualmente escuchan su transmisión y  cuántos créditos han sido activado",	
  "page_2_step_2":"Todos los Usuarios. Este número te muestra cuantas  Personas en total se han unido a su Grupo",	
  "page_2_step_3":"Este contador te muestra cuánto tiempo su Grupo ha estado abierto y le da la Capacidad de cerrar su Grupo",	
  "page_2_step_4":"Hablar. Este botón se utilizará para iniciar su Emisión. Una vez presionado podrás hablar con los Miembros de su Grupo y ellos Te escucharan  en sus dispositivos",	
  "page_2_step_5":"Notificar a todos. Este botón le permite Notificar a Todos los miembros del grupo sobre cualquier cosa importante actualizaciones. Usted envía un mensaje de texto, los Miembros del Grupo reciben un mensaje individual privado",	
  "page_2_step_6":"Copia. Este icono le permite copiar la Clave de grupo al portapapeles. A continuación, puede abrir Cualquier otra aplicación en su dispositivo y Pegar la clave de grupo para compartirla con tantas  personas como  quieras",
-	
  "page_3_step_1":"Detener. Este botón le permite terminar de  Difundir y desconectara a los Miembros Quien lo escucha. El Grupo permanecerá  abierto y puede iniciar su difusión de nuevo en cualquier momento",	
  "page_3_step_2":"Notificar a todos. Este botón le permite Notificar a Todos los miembros del grupo sobre cualquier importante actualizacion Usted le  envía un mensaje de texto, los Miembros del grupo reciben un mensaje privado",	
  "page_3_step_3":"Silencio / No silenciado. Este botón te permite silenciar su transmisión existente sin desconectar a cualquiera de los Miembros que le Escúchan",
-	
  "page_4_step_1":"Botón de cierre / escucha. Este botón cambiar a 'Escuchar' una vez que el Guia Turistico comienza la emisión. Entonces podrás hacer clic en él y comenzar a escuchar el Guía",	
  "page_4_step_2":"Mensaje. Como Turista puedes llegar a El Guia en un mensaje privado",	
  "page_4_step_3":"Icono de grupo de salida. Cuando hayas terminado con el Tour, simplemente haga clic en el icono de grupo de salida",

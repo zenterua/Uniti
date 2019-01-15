@@ -138,7 +138,6 @@
  "password_was_changed":"Password has been changed",
  "i_agree_to":"I agree to",
  "have_an_account":"If you already have an account",
- "tutorial":"Tutorial",
  "reports_title_1":"Credit Purchase History",
  "reports_title_2":"Credit Transfer History",
  "reports_title_3":"Credit Activation & Usage",
@@ -146,9 +145,9 @@
  "no_reports":"You don't have any reports for this period",
  "active":"Active",
  "recipient":"Recipient",
+ "recipients":"recipients",
  "amount":"Amount",
  "type":"Type",
- "recipients":"recipients",
  "used_credits":"Used Credits",
  "activated_credits":"Activated Credits",
  "total_credits":"total credits",
@@ -181,8 +180,7 @@
  "txt2":"All members will be disconnected.",
  "txt3":"Cancel"
  },
- "month_arr":
-["January","February","March","April","May","June","July","August","September","October","November","December"],  
+ "month_arr": ["January","February","March","April","May","June","July","August","September","October","November","December"],
  "data_was_updated_confirm":{
  "txt1":"Are you sure you want to change the email address?",
  "txt2":"Your email is used to login",
@@ -247,18 +245,15 @@
  "page_1_step_4":"Create. This button allows you to create your Group Key, which you can share with your Group. Group Key is a 4 digit code.",	
  "page_1_step_5":"Join. Each Tourist can join a Group by pressing this button and by entering a 4 digit Group Key received from the TourGuide.",	
  "page_1_step_6":"Settings Icon. Here you can change all your personal settings.",
-	
  "page_2_step_1":"Audio Users. This counter shows how many Group Members currently listen to your broadcast vs how many credits have been activated.",	
  "page_2_step_2":"All Users. This number shows you how many total people have Joined your Group.",	
  "page_2_step_3":"This counter shows you how long your Group has been open for and gives you the ability to Close your Group.",	
  "page_2_step_4":"Speak. This button will be used to start your Broadcast. Once pressed you will be able to speak to your Group Members and they will hear you on their devices.",	
  "page_2_step_5":"Notify All. This button allows you to Notify All Group Members about any important updates. You send one text message, the Group Members receive an individual private message.",	
  "page_2_step_6":"Copy. This Icon allows you to Copy the Group Key to Clipboard. You can then open any other application on your device and Paste the Group Key to share it with as many people as you like.",
-	
  "page_3_step_1":"Stop. This button lets you end your broadcast and disconnect the members who Listen to it. The Group will remain open and you can Start your Broadcast again at any time.",	
  "page_3_step_2":"Notify All. This button allows you to Notify All Group Members about any important updates. You send one text message, the Group Members receive an individual private message.",	
  "page_3_step_3":"Mute/Unmute. This button lets you Mute your existing Broadcast without disconnecting any of the Members who listen to it.",
-	
  "page_4_step_1":"Closed/Listen Button. This button will change to 'Listen' once the TourGuide begins the Broadcast. You will then be able to click on it and start to listen to the TourGuide.",	
  "page_4_step_2":"Message. As a Tourist you can reach out to the TourGuide in a Private Message.",	
  "page_4_step_3":"Exit Group Icon. When you are done with the Tour, simply click the Exit Group Icon.",
@@ -333,5 +328,4 @@
   "badNetWorkRoomError": "We are trying to connect to the Group, please wait",
   "badNetWorkCreateRoomError": "We are trying to create the Group, please wait",
   "session_end": "Session timeout, please login again"
-
 }

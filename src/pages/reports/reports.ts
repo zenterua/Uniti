@@ -11,7 +11,6 @@ import { ApiDataService } from '../services/api.service';
   templateUrl: 'reports.html'
 })
 export class ReportsPage {
-    reportPageExist:string;
     reportPage1Exist:any;
     reportPage2Exist:any;
     reportPage3Exist:any;
@@ -19,33 +18,33 @@ export class ReportsPage {
     
     constructor( public navCtrl: NavController, private api: ApiDataService, public alertCtrl: AlertController) {
          this.api.reportExist().subscribe((data)=>{
-             if (data.status == 'OK' && data.error == false) {
-                 if (data.type.length) {
-                  for (let item of data.type) { 
-                    if (item == 'purchase'){
-                     this.reportPage3Exist = 'purchase'; 
-                     }
-                     if (item == 'transfer'){
-                     this.reportPage1Exist = 'transfer'; 
-                     }
-                     if (item == 'activate'){
-                     this.reportPage2Exist = 'activate'; 
-                     }
-                     if (item == 'chat'){
-                     this.reportPage4Exist = 'chat'; 
-                     }  
-                  }
-                }
-             }else{
-               let errReports = this.alertCtrl.create({
-                   title: data.error_msg,
-                       buttons: [{
-                           text: 'OK',
-                           role: 'cancel'
-                       }]
-                   });
-               errReports.present();     
-             }
+           if (data.status == 'OK' && data.error == false) {
+             if (data.type.length) {
+              for (let item of data.type) {
+                if (item == 'purchase'){
+                 this.reportPage3Exist = 'purchase';
+                 }
+                 if (item == 'transfer'){
+                 this.reportPage1Exist = 'transfer';
+                 }
+                 if (item == 'activate'){
+                 this.reportPage2Exist = 'activate';
+                 }
+                 if (item == 'chat'){
+                 this.reportPage4Exist = 'chat';
+                 }
+              }
+            }
+           }else{
+             let errReports = this.alertCtrl.create({
+               title: data.error_msg,
+                 buttons: [{
+                     text: 'OK',
+                     role: 'cancel'
+                 }]
+               });
+             errReports.present();
+           }
          })
     }
 

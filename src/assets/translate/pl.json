@@ -33,7 +33,6 @@
         "txt3":"Anuluj",
         "txt4":"Aktywne kredyty wygasają po 24 godzinach",
         "txt5":" kredyt",
-        "txt6":"Cancel"
     },
     "enter_the_value":"Wpisz wartość",
     "transfer_credits_err":{
@@ -85,10 +84,8 @@
         "txt1":"Nie masz jeszcze skonfigurowanej metody płatności.Aby zakupić kredyty, wprowadź dane płatności",
         "txt2":"Anuluj"
     },
-    
     "only_active_credits":"Masz tylko aktywne kredyty",
     "enter_valid_user_email":"Wpisz poprawny adres email",
-    
     "field_required":"To pole jest wymagane",
     "email_not_valid":"Niepoprawny adres email",
     "login":"Zaloguj",
@@ -147,9 +144,10 @@
     "reports_title_4":"Grupy i Użytkownicy",
     "no_reports":"Nie ma raportów dla wybranego okresu",
     "active":"Aktywne",
+    "recipient":"Recipient",
+    "recipients":"odbiorcy",
     "amount":"Ilość",
     "type":"Typ",
-    "recipients":"odbiorcy",
     "used_credits":"Nieaktywne Kredyty",
     "activated_credits":"Aktywne Kredyty",
     "total_credits":"suma kredytów",
@@ -180,7 +178,7 @@
      "stop_voice":{
          "txt1":"Czy na pewno chcesz zakończyć AudioGuide?",
          "txt2":"Wszyscy zostaną rozłączeni.",
-         "txt3":"Cancel."
+         "txt3":"Anuluj"
      },
      "month_arr":["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"],
      "data_was_updated_confirm":{
@@ -241,25 +239,21 @@
 	   "txt_3":"Anuluj"
 	  },
 	  "tour_guide_close":"Grupa została zamknięta. Dziękujemy za skorzystanie z UNITI.",
-	
 	 "page_1_step_1":"Zakup Kredytów. Jeśli jesteś Przewodnikiem i chcesz mówić do swojej Grupy, będziesz potrzebował(a) zakupić Kredyty dla członków swojej Grupy. Każdy Kredyt kosztuje $0.10 i po jego aktywacji, jest ważny przez 24 godziny.",	
 	 "page_1_step_2":"Transferuj Kredyty. Możesz przesłać swoje kredyty do innego użytkownika UNITI, poprzez wpisanie jego adresu email.",	
 	 "page_1_step_3":"Aktywuj Kredyty. Tutaj możesz Aktywować swoje Kredyty, które możesz później użyć do fukcji AudioGuide kiedy chcesz Mówić do swojej Grupy. ",	
 	 "page_1_step_4":"Stwórz. Przycisk ten pozwala na stworzenie Kodu Grupy, którym możesz podzielić się z osobami w swojej Grupie Turystów. Kod Grupy ma 4 znaki.",	
 	 "page_1_step_5":"Dołącz. Każdy Turysta może dołączyć do Grupy poprzez kliknięcie na ten przycisk i wpisanie Kodu Grupy otrzymanego od Przewodnika.",	
 	 "page_1_step_6":"Ikonka Ustawień. Tutaj możesz zmienić wszystkie swoje ustawienia.",
-
 	 "page_2_step_1":"Użytkownicy Audio. Ten licznik pokazuje ilu członków Grupy słucha transmisji głosowej Przewodnika, vs ile Przewodnik ma Aktywnych Kredytów. ",	
 	 "page_2_step_2":"Wszyscy Użytkownicy. Ten numer pokazuje ilu Turystów dołączyło do Twojej Grupy.",	
 	 "page_2_step_3":"Ten licznik pokazuje Jak długo Twoja Grupa jest otwarta i pozawala Ci ją zamknąć.",	
 	 "page_2_step_4":"Mów. Ten przycisk użyj kiedy chcesz rozpocząć transmisję głosu. Po rozpoczęciu transmisji, członkowie Twojej Grupy mogą słuchać jej na swoich urządzeniach.",	
 	 "page_2_step_5":"Notyfikacja. Przycisk ten umożliwia wysłanie Notyfikacji do wszystkich członków Grupy. Wyślesz jedną wiadomość, a członkowie Grupy otrzymają indywidualną wiadomość.",	
 	 "page_2_step_6":"Ikonka Kopiuj. Ikonka pozwala na skopiowanie Kodu Grupy do pamięci. Możesz wtedy wysłać ten Kod Grupy, poprzez jakąkolwiek inną aplikację w Twoim urządzeniu, do ilu chcesz osób.",
-
 	 "page_3_step_1":"Stop. Przycisk ten pozwala na zakończenie transmisji głosu. Grupa pozostanie otwarta i będziesz mógł rozpocząć transmisję głosu ponownie.",	
 	 "page_3_step_2":"Notyfikacja. Przycisk ten umożliwia wysłanie Notyfikacji do wszystkich członków Grupy. Wyślesz jedną wiadomość, a członkowie Grupy otrzymają indywidualną wiadomość.",	
 	 "page_3_step_3":"Mute/Unmute. Przycisk ten umożliwia wyciszyć Transmisję Głosu tymczasowo bez rozłączania słuchających osób.",
-
 	 "page_4_step_1":"Przycisk Zamknięte/Słuchaj. Przycisk ten automatycznie zmieni się na “Słuchaj” w momencie, gdy Przewodnik rozpocznie Transmisję Głosu. Wtedy Turyści będą mogli rozpocząć Słuchanie Przewodnika.",	
 	 "page_4_step_2":"Wiadomość. Jako Turysta możesz napisać do Przewodnika prywatną wiadomość.",	
 	 "page_4_step_3":"Ikonka “Wyjdź z Grupy”. Po zakończeniu słuchania transmisji, po prostu kliknij na tę ikonkę aby wyjść z Grupy.",

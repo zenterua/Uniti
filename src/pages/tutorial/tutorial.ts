@@ -12,27 +12,23 @@ export class TutorialPage {
     skipMsg:string;
     
     constructor( public navCtrl: NavController, public translate: TranslateService ) {
-        this.translate.get('skip').subscribe((val)=>{ 
-            this.skipMsg = val;
-        });
+     this.translate.get('skip').subscribe((val)=>{
+        this.skipMsg = val;
+     });
     }
-	
-	closeTooltip(){
-		console.log('close tooltip')
-	}
     
     skip(){
-        if (this.slides.isEnd()) {
-           this.navCtrl.pop(); 
-        }else{
-           this.slides.slideNext(500); 
-        }
+			if (this.slides.isEnd()) {
+		 		this.navCtrl.pop();
+			}else{
+			  this.slides.slideNext(500);
+			}
     } 
     
     slideChanged() {
-        if (this.slides.isEnd())
-        this.translate.get('alright').subscribe((val)=>{    
-            this.skipMsg = val;
-        });
+			if (this.slides.isEnd())
+			this.translate.get('alright').subscribe((val)=>{
+				this.skipMsg = val;
+			});
     }
 }

@@ -8,7 +8,8 @@ import { languageService } from '../services/language.service';
   templateUrl: 'language.html'
 })
 export class LanguagePage {
-   langModel:string;    
+   langModel:string;
+   test:any;
     
    constructor( public translate: TranslateService,
                 private globalization: Globalization,

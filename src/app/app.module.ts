@@ -54,6 +54,9 @@ import { AppPreviewPage } from '../pages/app-preview/app-preview';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { messageCounterService } from "../pages/services/messageCounte.services";
 
+// export function createTranslateLoader(http: HttpClient) {
+//   return new TranslateHttpLoader(http, 'http://uniti.redstone.media/lang/translate/', '.json');
+// }
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/translate/', '.json');
 }

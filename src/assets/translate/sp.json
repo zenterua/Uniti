@@ -327,5 +327,8 @@
   "badNetWorkCreditError": "We are trying to send the Credits, please wait",
   "badNetWorkRoomError": "We are trying to connect to the Group, please wait",
   "badNetWorkCreateRoomError": "We are trying to create the Group, please wait",
-  "session_end": "Session timeout, please login again"
+  "session_end": "Session timeout, please login again",
+  "enter_card_number": "Enter Card Number",
+  "enter_cvv_code": "Enter CVV Code",
+  "transfer_active_credits_alert": "You will send your active credits to another user"
 }

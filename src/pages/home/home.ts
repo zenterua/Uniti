@@ -697,24 +697,10 @@ export class HomePage {
     });
 
     this.logoutService.getLogout().subscribe( () => {
-      if ( window.localStorage.getItem('Group_Initiator') == '1'  && window.localStorage.getItem('room_name') != '') {
-        this.exitCreateChatMethod();
+      if ( window.localStorage.getItem('Group_Initiator') == '1' && window.localStorage.getItem('room_name') != '') {
+        this.stopToVoiceChat();
       } else {
-        this.voiceActive = false;
-        this.joinRoomShow = false;
-        this.room_join = '';
-        this.room_open = '';
-        this.messChatToAdmin = false;
-        this.isAdmin = false;
-        this.messCount = 0;
-        this.socket.emit('leave');
-        window.localStorage.removeItem('room_name');
-        window.localStorage.removeItem('listen_start');
-        window.localStorage.setItem('Group_listener', '');
-        this.hideStartButton = false;
-        this.messages = [];
-        this.reconnect();
-        clearInterval(this.chekRoomExist);
+        this.stopFromVoiceChat();
       }
     });
 
@@ -1002,7 +988,7 @@ export class HomePage {
                 buttons: [{
                   text: 'OK',
                   handler: () => {
-                    this.connection.checkPresence(window.localStorage.getItem('room_name'), (isRoomExist, roomid) => {
+                    this.connection.checkPresence(window.localStorage.getItem('room_name'), (isRoomExist) => {
                       if (isRoomExist && window.localStorage.getItem('Group_Initiator') == '1') {
                         this.translate.get('activeCreditTransErr').subscribe((val)=>{
                           let creditTranserOnActiveRoom = this.alertCtrl.create({
@@ -1199,7 +1185,16 @@ export class HomePage {
 
   transferIsActive(){
     if (this.isActiveTransfer == true) {
-      if ( (this.activeCredits == 0) && (this.activeCreditsTriger == true) ) {
+      this.translate.get('transfer_active_credits_alert').subscribe((val)=>{
+        let transferInfo = this.alertCtrl.create({
+          title: val,
+          buttons: [{
+            text: 'OK'
+          }]
+        });
+        transferInfo.present();
+      });
+      if ( this.activeCredits == 0 && this.activeCreditsTriger == true) {
         this.translate.get('no_credits_to_transfer').subscribe((val)=>{
           let alertActive = this.alertCtrl.create({
             title: val,
@@ -1214,7 +1209,7 @@ export class HomePage {
         });
       }
     }else{
-      if ( (this.allCredits == 0) && (this.allCreditsTriger == true) ) {
+      if ( this.allCredits == 0 && this.allCreditsTriger == true ) {
         this.translate.get('only_active_credits').subscribe((val)=>{
           let alertActiveNo = this.alertCtrl.create({
             title: val,
@@ -2013,7 +2008,7 @@ export class HomePage {
   openChatWithAdmin(){
     this.messChatToAll = true;
     // setTimeout(()=> this.chattoalluser.nativeElement.focus(), 200);
-    // this.messCount = 0;
+    this.messCount = 0;
     var element = document.getElementById('scrollToBottom');
     setTimeout(()=>{element.scrollIntoView(true)},500);
   }
@@ -2030,9 +2025,6 @@ export class HomePage {
   openAllUsers(){
     this.openUsersChatList = !this.openUsersChatList;
     this.layerClose = !this.layerClose;
-    if (this.openUsersChatList == true){
-      // this.messCountAdm = 0;
-    }
   }
 
   // open chat with user

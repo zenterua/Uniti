@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Keyboard } from '@ionic-native/keyboard';
-import { Platform } from 'ionic-angular';
+import { Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { MenuPage } from '../pages/menu/menu';
 import { Globalization } from '@ionic-native/globalization';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { AppPreviewPage } from '../pages/app-preview/app-preview';
 import {languageService} from "../pages/services/language.service";
+import {ApiDataService} from "../pages/services/api.service";
+
 
 @Component({
   templateUrl: 'app.html'
@@ -17,12 +19,12 @@ export class MyApp {
   rootPage:any;
   lang_type:any;
 
-     
   constructor(public platform: Platform,
               private androidPermissions: AndroidPermissions, statusBar: StatusBar, splashScreen: SplashScreen, keyboard: Keyboard,
               public translate: TranslateService,
               private globalization: Globalization,
-              private languageService: languageService) {
+              private languageService: languageService,
+              private http: ApiDataService) {
     
     platform.ready().then(() => {
        keyboard.hideKeyboardAccessoryBar(false);
@@ -52,5 +54,5 @@ export class MyApp {
 
     });
   }
-   
+
 }

@@ -53,13 +53,14 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { AppPreviewPage } from '../pages/app-preview/app-preview';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { messageCounterService } from "../pages/services/messageCounte.services";
+import { HTTP } from '@ionic-native/http';
 
 // export function createTranslateLoader(http: HttpClient) {
 //   return new TranslateHttpLoader(http, 'http://uniti.redstone.media/lang/translate/', '.json');
 // }
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/translate/', '.json');
-}
+// export function createTranslateLoader(http: HttpClient) {
+//   return new TranslateHttpLoader(http, './assets/translate/', '.json');
+// }
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ export function createTranslateLoader(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
+        useClass: languageService,
+        // useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }   
     }),  
@@ -148,6 +150,7 @@ export function createTranslateLoader(http: HttpClient) {
     logoutService,
     languageService,
     messageCounterService,
+    HTTP,
     {provide: '_OPTIONS_', useValue: {
     transports: ['websocket'],
     query: {token: window.localStorage.getItem('authUniti'),

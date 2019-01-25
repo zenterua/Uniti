@@ -330,6 +330,7 @@
   "session_end": "Session timeout, please login again",
   "enter_card_number": "Enter Card Number",
   "enter_cvv_code": "Enter CVV Code",
-  "transfer_active_credits_alert": "You will send your active credits to another user"
+  "transfer_active_credits_alert": "You will send your active credits to another user",
+  "switch_language": "Change language, please waite...."
 
 }

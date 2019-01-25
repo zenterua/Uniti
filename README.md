@@ -1,8 +1,6 @@
 # Uniti
 Mobile hybrid application.
 
-- You in the development branch. Here we implements some new feature functionality, this version not stable, and something can be broken - so don't be some mad. :)
-
 Tour Guide & all Tourists in the Group use the same Application. Tour Guide communicates with the members of the group using the AudioGuide System, speaks to the group. Tourists, members of the group, listen to the transmission dedicated only to the group. Password restricted, safe, 21st century solution for the Travel Industry.
 
 Tour Guide & all Tourists in the Group use the same Application. Tour Guide communicates with the members of the group using the AudioGuide System, speaks to the group. Tourists, members of the group, listen to the transmission dedicated only to the group. Password restricted, safe, 21st century solution for the Travel Industry.

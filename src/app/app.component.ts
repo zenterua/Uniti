@@ -9,8 +9,6 @@ import {TranslateService} from '@ngx-translate/core';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { AppPreviewPage } from '../pages/app-preview/app-preview';
 import {languageService} from "../pages/services/language.service";
-import {ApiDataService} from "../pages/services/api.service";
-
 
 @Component({
   templateUrl: 'app.html'
@@ -23,8 +21,7 @@ export class MyApp {
               private androidPermissions: AndroidPermissions, statusBar: StatusBar, splashScreen: SplashScreen, keyboard: Keyboard,
               public translate: TranslateService,
               private globalization: Globalization,
-              private languageService: languageService,
-              private http: ApiDataService) {
+              private languageService: languageService) {
     
     platform.ready().then(() => {
        keyboard.hideKeyboardAccessoryBar(false);

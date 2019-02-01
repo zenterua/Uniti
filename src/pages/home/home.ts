@@ -174,9 +174,10 @@ export class HomePage {
       this.connection = new RTCMultiConnection();
       this.connection.socketURL = 'https://uniti.redstone.media:9001/';
       this.connection.socketMessageEvent = 'audio-conference-demo';
-      this.connection.session = {audio: true,video: false};
+      this.connection.session = {audio: true,video: false, oneway: true};
       this.connection.mediaConstraints = {audio: true,video: false};
       this.connection.bandwidth = {audio: 6};
+      this.connection.direction = 'one-way';
       this.connection.sdpConstraints.mandatory = {OfferToReceiveAudio: true,OfferToReceiveVideo: false};
       let containerAudio = this.audioPlay.nativeElement;
       let fullchat = this.fullchat.nativeElement;
@@ -417,13 +418,13 @@ export class HomePage {
 
         mediaElement.id = e.streamid;
 
-        if(e.type == 'local' && !this.connection.extra.roomAdmin){
-          this.connection.streamEvents[e.streamid].stream.mute();
-        }
-
-        if(e.type == 'remote' && this.connection.extra.roomAdmin){
-          this.connection.streamEvents[e.streamid].stream.mute();
-        }
+        // if(e.type == 'local' && !this.connection.extra.roomAdmin){
+        //   this.connection.streamEvents[e.streamid].stream.mute();
+        // }
+        //
+        // if(e.type == 'remote' && this.connection.extra.roomAdmin){
+        //   this.connection.streamEvents[e.streamid].stream.mute();
+        // }
       };
 
       this.connection.onRoomFull = function(roomid){

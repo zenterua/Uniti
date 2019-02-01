@@ -29,14 +29,14 @@ export class LanguagePage implements OnInit{
       window.localStorage.setItem('unitiLang', e);
       this.translate.get('switch_language').subscribe((val)=>{
         reload = this.loadingCtrl.create({
-          content: ''
+          content: val
         });
 
       });
       reload.present();
       setTimeout(() => {
         window.location.reload();
-      },2000)
+      },1000)
 
 
     }

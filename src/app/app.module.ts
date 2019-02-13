@@ -131,7 +131,7 @@ import { HTTP } from '@ionic-native/http';
     SocketIo,
     Keyboard,
     DataUpdateService, 
-    BackgroundMode, 
+    BackgroundMode,
     Globalization, 
     AppRate, 
     ActiveCreditsVal,

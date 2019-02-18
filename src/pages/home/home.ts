@@ -119,6 +119,7 @@ export class HomePage {
   checkNetError:boolean = true;
   keyCheckExist: boolean = false;
   privateChatMessages: any = [];
+  backgroundMode_on: boolean = true;
 
   @ViewChild('openKeyField1') openKeyField1;
   @ViewChild('openKeyField2') openKeyField2;
@@ -132,6 +133,8 @@ export class HomePage {
   @ViewChild('chattoalluser') chattoalluser;
   @ViewChild('myMessage') myMessage: ElementRef;
   @ViewChild('myAdminMessage') myAdminMessage: ElementRef;
+
+  @ViewChild('textArea') textArea: ElementRef;
 
   constructor(public navCtrl: NavController,
               public socket: SocketIo,
@@ -165,16 +168,21 @@ export class HomePage {
     }).connect();
 
     platform.ready().then(() => {
+
+
       this.backgroundMode.enable();
+      if ( window.localStorage.getItem('listen_start') != null ) {
+        window.localStorage.removeItem('listen_start');
+      }
       this.faio.isAvailable()
         .then((result: any) => {this.hasTouchID = true;})
         .catch((error: any) => {this.hasTouchID = false;});
 
       this.connection = new RTCMultiConnection();
       this.connection.socketURL = 'https://uniti.redstone.media:9001/';
-      this.connection.socketMessageEvent = 'audio-conference-demo';
-      this.connection.session = {audio: true,video: false, oneway: true};
-      this.connection.mediaConstraints = {audio: true,video: false};
+      this.connection.socketMessageEvent = 'Uniti-audio';
+      this.connection.session = {audio: true,video: false};
+      this.connection.mediaConstraints = {audio: true,video: false, oneway: true};
       this.connection.bandwidth = {audio: 6};
       this.connection.direction = 'one-way';
       this.connection.sdpConstraints.mandatory = {OfferToReceiveAudio: true,OfferToReceiveVideo: false};
@@ -184,6 +192,59 @@ export class HomePage {
       this.boardRoom = window.localStorage.getItem('room_name');
 
       this.adminGetAllUsers();
+
+      // if (this.platform.is('android')) {
+      //   this.platform.pause.subscribe(() => {
+      //     if (window.localStorage.getItem('listen_start') == null && this.backgroundMode_on ) {
+      //       window.location.reload();
+      //     }
+      //     this.backgroundMode_on = false;
+      //   });
+      //   this.platform.resume.subscribe(() => {
+      //     if ( !this.backgroundMode_on ) {
+      //       this.platform.exitApp();
+      //     }
+      //     this.backgroundMode_on = true;
+      //   });
+      // }
+
+      if (this.platform.is('ios')) {
+        this.onSocketConnect().subscribe(() => {
+          let networkRecconectProblem;
+          if ( window.localStorage.getItem('listen_start') != null && window.localStorage.getItem('Group_Initiator') == '1' ) {
+            this.connection.checkPresence(window.localStorage.getItem('room_name'), (isRoomExist, roomid) => {
+              if (isRoomExist) {
+                this.translate.get('badNetwork').subscribe((val)=>{
+                  networkRecconectProblem = this.alertCtrl.create({
+                    title: val,
+                    buttons: [{
+                      text: 'OK',
+                      handler: () => {}
+                    }]
+                  });
+
+                });
+                networkRecconectProblem.present();
+                setTimeout(() => {
+                  this.connection.join(window.localStorage.getItem('room_name'));
+                },1000);
+
+              }
+            });
+          }
+          if ( window.localStorage.getItem('listen_start') != null && window.localStorage.getItem('Group_listener') == '1'  ) {
+            this.connection.checkPresence(window.localStorage.getItem('room_name'), (isRoomExist, roomid) => {
+              if (isRoomExist) {
+                this.reconnect();
+                setTimeout(() => {
+                  this.connection.join(window.localStorage.getItem('room_name'));
+                },500);
+
+              }
+            });
+          }
+        });
+      }
 
       // Check chat on first connect
       this.api.chatExist({'code': window.localStorage.getItem('room_name')}).subscribe((data) =>{ // admin
@@ -206,6 +267,8 @@ export class HomePage {
 
           this.socket.emit('room', window.localStorage.getItem('room_name'));
           this.socket.emit('list_users');
+
+
           this.joinRoomShow = false;
           this.openRoomShow = true;
           this.isAdmin = true;
@@ -404,9 +467,20 @@ export class HomePage {
         }
       };
 
+      this.connection.onstream = (e)=> {
+        if(e.type == 'local' && !this.connection.extra.roomAdmin){
+          this.connection.streamEvents[e.streamid].stream.mute();
+        }
+
+        if(e.type == 'remote' && this.connection.extra.roomAdmin){
+          this.connection.streamEvents[e.streamid].stream.mute();
+        }
+      };
+
       this.connection.onRoomFull = function(roomid){
         fullchat.classList.add('show-elem');
       };
+
 
       setTimeout(() => {
         this.msgCountService.sendMsgCount().subscribe(data => {
@@ -1861,6 +1935,7 @@ export class HomePage {
           }else{
             VoiceElem.classList.remove('open');
             this.tourGuidSpeakNotifi = true;
+            this.record = false;
             return;
           }
         });
@@ -2254,6 +2329,16 @@ export class HomePage {
     });
     return observable;
   }
+
+  onSocketConnect() {
+    let observable = new Observable(observer => {
+      this.socket.on('connect', (data) => {
+        observer.next(data);
+      });
+    });
+    return observable;
+  }
+
 
   onSocketCloseRoom() {
     let observable = new Observable(observer => {

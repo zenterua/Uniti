@@ -507,7 +507,7 @@ ion-scroll.chat-scroll .scroll-content {bottom: 90px;}
     .toolbar-title .title-overflow {max-width: 210px;}
 }
 
-#audios-container {opacity: 0; position: absolute; left: 0px; bottom: 0px; visibility: hidden; z-index: -5;}
+//#audios-container {opacity: 0; position: absolute; left: 0px; bottom: 0px; visibility: hidden; z-index: -5;}
 .wrap-rel {position: relative; display: inline-block;}
 .is-full {z-index: 15; position: absolute; left: 0px; top: 0px; box-shadow: none; display: none; font-size: 12px;}
 .show-elem {display: inline-block!important;}
@@ -988,6 +988,15 @@ min-height: calc(60px + env(safe-area-inset-top));}
   }
   .val {
     font-size: 13px;
+  }
+}
+
+@media(max-width: 330px) {
+  .input-mess-chat {
+    padding: 5px 115px 5px 5px;
+  }
+  .credit-item .txt span {
+    font-size: 12px;
   }
 }
 

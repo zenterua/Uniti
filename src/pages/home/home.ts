@@ -120,7 +120,6 @@ export class HomePage {
   keyCheckExist: boolean = false;
   privateChatMessages: any = [];
 
-  @ViewChild('audioPlay') audioPlay: ElementRef;
   @ViewChild('openKeyField1') openKeyField1;
   @ViewChild('openKeyField2') openKeyField2;
   @ViewChild('openKeyField3') openKeyField3;
@@ -178,7 +177,6 @@ export class HomePage {
       this.connection.mediaConstraints = {audio: true,video: false};
       this.connection.bandwidth = {audio: 6};
       this.connection.sdpConstraints.mandatory = {OfferToReceiveAudio: true,OfferToReceiveVideo: false};
-      let containerAudio = this.audioPlay.nativeElement;
       let fullchat = this.fullchat.nativeElement;
       let voicechat = this.voicechat.nativeElement;
       this.room_join = window.localStorage.getItem('room_name');
@@ -406,17 +404,6 @@ export class HomePage {
       };
 
       this.connection.onstream = (e)=> {
-        let mediaElement = e.mediaElement;
-        containerAudio.appendChild(mediaElement);
-        setTimeout(function(){
-
-          if (mediaElement){
-            mediaElement.play();
-          }
-        }, 1000);
-
-        mediaElement.id = e.streamid;
-
         if(e.type == 'local' && !this.connection.extra.roomAdmin){
           this.connection.streamEvents[e.streamid].stream.mute();
         }
@@ -431,12 +418,12 @@ export class HomePage {
       };
 
       this.connection.onstreamended = function(e){
-        let mediaElement:any = document.getElementById(e.streamid);
-
-        fullchat.classList.remove('show-elem');
-        if (mediaElement) {
-          mediaElement.parentNode.removeChild(mediaElement);
-        }
+        // let mediaElement:any = document.getElementById(e.streamid);
+        //
+        // fullchat.classList.remove('show-elem');
+        // if (mediaElement) {
+        //   mediaElement.parentNode.removeChild(mediaElement);
+        // }
 
       };
 

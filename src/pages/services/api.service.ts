@@ -10,7 +10,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/filter';
 import {Subject} from "rxjs";
 
-const apiUrl = 'http://uniti.redstone.media:3000'; 
+const apiUrl = 'http://uniti.redstone.media:3000';
 
 @Injectable()
 export class ApiDataService {

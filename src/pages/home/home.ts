@@ -186,48 +186,19 @@ export class HomePage {
       this.connection.sdpConstraints.mandatory = {OfferToReceiveAudio: true,OfferToReceiveVideo: false};
       let fullchat = this.fullchat.nativeElement;
       let voicechat = this.voicechat.nativeElement;
+      this.connection.iceServers = [];
+      this.connection.iceServers.push({
+        urls: 'stun:217.182.77.219:3478'
+      });
+      this.connection.iceServers.push({
+        urls: 'turn:217.182.77.219:3478',
+        credential: 'Qq8KhQFXjDfW',
+        username: 'rtc_uniti'
+      });
       this.room_join = window.localStorage.getItem('room_name');
       this.boardRoom = window.localStorage.getItem('room_name');
 
       this.adminGetAllUsers();
-
-      // if (this.platform.is('ios')) {
-      //   this.onSocketConnect().subscribe(() => {
-      //     let networkRecconectProblem;
-      //     if ( window.localStorage.getItem('listen_start') != null && window.localStorage.getItem('Group_Initiator') == '1' ) {
-      //       this.connection.checkPresence(window.localStorage.getItem('room_name'), (isRoomExist, roomid) => {
-      //         if (isRoomExist) {
-      //           this.translate.get('badNetwork').subscribe((val)=>{
-      //             networkRecconectProblem = this.alertCtrl.create({
-      //               title: val,
-      //               buttons: [{
-      //                 text: 'OK',
-      //                 handler: () => {}
-      //               }]
-      //             });
-      //
-      //           });
-      //           networkRecconectProblem.present();
-      //           setTimeout(() => {
-      //             this.connection.join(window.localStorage.getItem('room_name'));
-      //           },1000);
-      //
-      //         }
-      //       });
-      //     }
-      //     if ( window.localStorage.getItem('listen_start') != null && window.localStorage.getItem('Group_listener') == '1'  ) {
-      //       this.connection.checkPresence(window.localStorage.getItem('room_name'), (isRoomExist, roomid) => {
-      //         if (isRoomExist) {
-      //           this.reconnect();
-      //           setTimeout(() => {
-      //             this.connection.join(window.localStorage.getItem('room_name'));
-      //           },500);
-      //
-      //         }
-      //       });
-      //     }
-      //   });
-      // }
 
       // Check chat on first connect
       this.api.chatExist({'code': window.localStorage.getItem('room_name')}).subscribe((data) =>{ // admin

@@ -2,9 +2,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import * as jwt_decode from "jwt-decode";
-import {App} from "ionic-angular";
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {AuthService} from "./auth.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

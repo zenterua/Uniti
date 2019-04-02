@@ -20,7 +20,7 @@
            <div class="col-100">
                <div class="form-field-wrap">
                    <label class="form-field-label">{{ 'card_number' | translate }}</label>
-                    <input type="tel" placeholder="Enter Card Number" [(ngModel)]="card.card_number" formControlName="cardNumber"  required>
+                    <input type="tel" placeholder="{{'enter_card_number' | translate}}" [(ngModel)]="card.card_number" formControlName="cardNumber"  required>
                     <div *ngIf="errorCard && paycardForm.controls.cardNumber.hasError('required')" class="err-field">
                         <div class="form-err">{{ 'field_required' | translate }}</div>
                     </div>
@@ -43,7 +43,7 @@
                <div class="form-field-wrap">
                     <div class="select-field-arrow"></div>
                     <select name="yearSelect" formControlName="cardYear" [(ngModel)]="card.card_year" class="select-field" required>
-                        <option *ngFor="let year of yearOption" [value]="year.val">{{year.val}}</option>
+                        <option *ngFor="let year of yearOption; let i = index;" [selected]="i == 0" [value]="year.val">{{year.val}}</option>
                     </select>
                     <div *ngIf="errorCard && paycardForm.controls.cardYear.hasError('required')" class="err-field">
                         <div class="form-err">{{ 'field_required' | translate }}</div>
@@ -53,7 +53,7 @@
             <div class="col-100">
                 <div class="form-field-wrap">
                    <label class="form-field-label">{{ 'cvv_code' | translate }} </label>
-                    <input type="password" placeholder="Enter CVV Code" [(ngModel)]="card.card_code" formControlName="cardCVV" maxlength="4" required>
+                    <input type="password" placeholder="{{'enter_cvv_code' | translate}}" [(ngModel)]="card.card_code" formControlName="cardCVV" maxlength="4" required>
                     <div *ngIf="errorCard && paycardForm.controls.cardCVV.hasError('required')" class="err-field">
                         <div class="form-err">{{ 'field_required' | translate }}</div>
                     </div>

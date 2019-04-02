@@ -19,6 +19,7 @@ export class AppPreviewPage {
               public translate: TranslateService,
               public splashScreen: SplashScreen) {
     platform.ready().then( () =>{
+      this.slides.autoHeight = true;
       if ( window.localStorage.getItem('tokenLifeEnd') != null ) {
         splashScreen.show();
         setTimeout(() => {
@@ -29,7 +30,7 @@ export class AppPreviewPage {
     });
   }
   ionViewDidLoad() {
-    this.slides.autoHeight = true;
+
   }
 
   pushRegisterPage() {

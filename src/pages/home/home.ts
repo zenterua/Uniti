@@ -119,6 +119,9 @@ export class HomePage {
   checkNetError:boolean = true;
   keyCheckExist: boolean = false;
   privateChatMessages: any = [];
+  voiceRoomDead: boolean = false;
+  adminKillRoom: boolean = false;
+  roomLifeTime: any;
 
   @ViewChild('openKeyField1') openKeyField1;
   @ViewChild('openKeyField2') openKeyField2;
@@ -132,6 +135,7 @@ export class HomePage {
   @ViewChild('chattoalluser') chattoalluser;
   @ViewChild('myMessage') myMessage: ElementRef;
   @ViewChild('myAdminMessage') myAdminMessage: ElementRef;
+  @ViewChild('textArea') textArea: ElementRef;
 
   constructor(public navCtrl: NavController,
               public socket: SocketIo,
@@ -166,19 +170,31 @@ export class HomePage {
 
     platform.ready().then(() => {
       this.backgroundMode.enable();
+      if ( window.localStorage.getItem('listen_start') != null ) {
+        window.localStorage.removeItem('listen_start');
+      }
       this.faio.isAvailable()
         .then((result: any) => {this.hasTouchID = true;})
         .catch((error: any) => {this.hasTouchID = false;});
 
       this.connection = new RTCMultiConnection();
       this.connection.socketURL = 'https://uniti.redstone.media:9001/';
-      this.connection.socketMessageEvent = 'audio-conference-demo';
-      this.connection.session = {audio: true,video: false};
+      this.connection.socketMessageEvent = 'Uniti-audio';
+      this.connection.session = {audio: true,video: false, oneway: true};
       this.connection.mediaConstraints = {audio: true,video: false};
       this.connection.bandwidth = {audio: 6};
       this.connection.sdpConstraints.mandatory = {OfferToReceiveAudio: true,OfferToReceiveVideo: false};
       let fullchat = this.fullchat.nativeElement;
       let voicechat = this.voicechat.nativeElement;
+      this.connection.iceServers = [];
+      this.connection.iceServers.push({
+        urls: 'stun:217.182.77.219:3478'
+      });
+      this.connection.iceServers.push({
+        urls: 'turn:217.182.77.219:3478',
+        credential: 'Qq8KhQFXjDfW',
+        username: 'rtc_uniti'
+      });
       this.room_join = window.localStorage.getItem('room_name');
       this.boardRoom = window.localStorage.getItem('room_name');
 
@@ -205,6 +221,8 @@ export class HomePage {
 
           this.socket.emit('room', window.localStorage.getItem('room_name'));
           this.socket.emit('list_users');
+
+
           this.joinRoomShow = false;
           this.openRoomShow = true;
           this.isAdmin = true;
@@ -268,6 +286,7 @@ export class HomePage {
       });
 
       this.connection.onPeerStateChanged = (event)=> {
+
         // check chat is full
         if(this.connection.extra.roomAdmin == this.connection.sessionid && event.iceConnectionState == 'connected' && this.connection.getAllParticipants().length >= this.activeCredits){
           this.connection.extra.fullRoom = 'full';
@@ -275,7 +294,6 @@ export class HomePage {
         } else if (this.connection.extra.roomAdmin == this.connection.sessionid && event.iceConnectionState == 'disconnected' && this.connection.getAllParticipants().length <= this.activeCredits){
           this.connection.extra.fullRoom = '';
           this.connection.updateExtraData();
-
         }
 
         setTimeout( () => {
@@ -361,15 +379,18 @@ export class HomePage {
               this.room_join = '';
               this.reconnect();
               this.checkVoiceChatOpen();
+              this.voiceRoomDead = true;
 
             } else {
 
             }
           }, 30000);
+
         }
       };
 
       this.connection.onleave = (event)=> {
+
         if (this.connection.extra.roomAdmin == this.connection.sessionid && this.connection.getAllParticipants().length <= this.activeCredits){
           this.connection.extra.fullRoom = '';
           this.connection.updateExtraData();
@@ -401,6 +422,7 @@ export class HomePage {
             stop_speak.present();
           });
         }
+
       };
 
       this.connection.onstream = (e)=> {
@@ -413,19 +435,35 @@ export class HomePage {
         }
       };
 
+      this.connection.onstreamended = (event) => {
+        let reconnectToRoom;
+        if(event.extra.roomAdmin == window.localStorage.getItem('room_name') && event.extra.close !== 'closed') {
+          if (window.localStorage.getItem('Group_listener') == '1') {
+            reconnectToRoom = setInterval(() => {
+              if ( !this.voiceRoomDead ){
+                this.connection.join(window.localStorage.getItem('room_name'));
+                this.voiceRoomDead = false;
+                if ( this.connection.getAllParticipants().length > 0) {
+                  clearInterval(reconnectToRoom);
+                  this.startListen = true;
+                  this.voiceActive = true;
+                  this.record = false;
+                }
+              } else {
+                clearInterval(reconnectToRoom);
+                this.voiceRoomDead = false;
+              }
+            }, 2000);
+          }
+
+        }
+      };
+
+
       this.connection.onRoomFull = function(roomid){
         fullchat.classList.add('show-elem');
       };
 
-      this.connection.onstreamended = function(e){
-        // let mediaElement:any = document.getElementById(e.streamid);
-        //
-        // fullchat.classList.remove('show-elem');
-        // if (mediaElement) {
-        //   mediaElement.parentNode.removeChild(mediaElement);
-        // }
-
-      };
 
       setTimeout(() => {
         this.msgCountService.sendMsgCount().subscribe(data => {
@@ -623,6 +661,9 @@ export class HomePage {
     });
 
     this.network.onDisconnect().subscribe(() => {
+      this.roomLifeTime = setTimeout(() => {
+        this.adminKillRoom = true;
+      }, 32000);
 
       clearInterval(this.globalActive.getActiveCreditsNumber);
       if ( this.checkNetError ) {
@@ -667,10 +708,27 @@ export class HomePage {
           }
         } else {
           if ( this.connection.extra.roomAdmin == room ) {
-            this.record = false;
+            setTimeout(() => {
+              this.record = false;
+            }, 2500);
+
           }
         }
       });
+
+      if ( window.localStorage.getItem('Group_Initiator') == '1' && window.localStorage.getItem('listen_start') && !this.adminKillRoom ) {
+        setTimeout(() => {
+          this.connection.open(room);
+          clearTimeout(this.roomLifeTime);
+          setTimeout(() => {
+            this.record = true;
+            this.soundOff = false;
+          }, 1500);
+        },3000);
+
+      } else {
+        this.adminKillRoom = false;
+      }
 
       this.adminGetAllUsers();
 
@@ -684,24 +742,10 @@ export class HomePage {
     });
 
     this.logoutService.getLogout().subscribe( () => {
-      if ( window.localStorage.getItem('Group_Initiator') == '1'  && window.localStorage.getItem('room_name') != '') {
-        this.exitCreateChatMethod();
+      if ( window.localStorage.getItem('Group_Initiator') == '1' && window.localStorage.getItem('room_name') != '') {
+        this.stopToVoiceChat();
       } else {
-        this.voiceActive = false;
-        this.joinRoomShow = false;
-        this.room_join = '';
-        this.room_open = '';
-        this.messChatToAdmin = false;
-        this.isAdmin = false;
-        this.messCount = 0;
-        this.socket.emit('leave');
-        window.localStorage.removeItem('room_name');
-        window.localStorage.removeItem('listen_start');
-        window.localStorage.setItem('Group_listener', '');
-        this.hideStartButton = false;
-        this.messages = [];
-        this.reconnect();
-        clearInterval(this.chekRoomExist);
+        this.stopFromVoiceChat();
       }
     });
 
@@ -989,7 +1033,7 @@ export class HomePage {
                 buttons: [{
                   text: 'OK',
                   handler: () => {
-                    this.connection.checkPresence(window.localStorage.getItem('room_name'), (isRoomExist, roomid) => {
+                    this.connection.checkPresence(window.localStorage.getItem('room_name'), (isRoomExist) => {
                       if (isRoomExist && window.localStorage.getItem('Group_Initiator') == '1') {
                         this.translate.get('activeCreditTransErr').subscribe((val)=>{
                           let creditTranserOnActiveRoom = this.alertCtrl.create({
@@ -1186,7 +1230,16 @@ export class HomePage {
 
   transferIsActive(){
     if (this.isActiveTransfer == true) {
-      if ( (this.activeCredits == 0) && (this.activeCreditsTriger == true) ) {
+      this.translate.get('transfer_active_credits_alert').subscribe((val)=>{
+        let transferInfo = this.alertCtrl.create({
+          title: val,
+          buttons: [{
+            text: 'OK'
+          }]
+        });
+        transferInfo.present();
+      });
+      if ( this.activeCredits == 0 && this.activeCreditsTriger == true) {
         this.translate.get('no_credits_to_transfer').subscribe((val)=>{
           let alertActive = this.alertCtrl.create({
             title: val,
@@ -1201,7 +1254,7 @@ export class HomePage {
         });
       }
     }else{
-      if ( (this.allCredits == 0) && (this.allCreditsTriger == true) ) {
+      if ( this.allCredits == 0 && this.allCreditsTriger == true ) {
         this.translate.get('only_active_credits').subscribe((val)=>{
           let alertActiveNo = this.alertCtrl.create({
             title: val,
@@ -1885,6 +1938,7 @@ export class HomePage {
           }else{
             VoiceElem.classList.remove('open');
             this.tourGuidSpeakNotifi = true;
+            this.record = false;
             return;
           }
         });
@@ -2000,7 +2054,7 @@ export class HomePage {
   openChatWithAdmin(){
     this.messChatToAll = true;
     // setTimeout(()=> this.chattoalluser.nativeElement.focus(), 200);
-    // this.messCount = 0;
+    this.messCount = 0;
     var element = document.getElementById('scrollToBottom');
     setTimeout(()=>{element.scrollIntoView(true)},500);
   }
@@ -2017,9 +2071,6 @@ export class HomePage {
   openAllUsers(){
     this.openUsersChatList = !this.openUsersChatList;
     this.layerClose = !this.layerClose;
-    if (this.openUsersChatList == true){
-      // this.messCountAdm = 0;
-    }
   }
 
   // open chat with user
@@ -2281,6 +2332,16 @@ export class HomePage {
     });
     return observable;
   }
+
+  onSocketConnect() {
+    let observable = new Observable(observer => {
+      this.socket.on('connect', (data) => {
+        observer.next(data);
+      });
+    });
+    return observable;
+  }
+
 
   onSocketCloseRoom() {
     let observable = new Observable(observer => {

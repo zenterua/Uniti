@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="form-field-wrap">
-        <input type="email" placeholder="Email address" [(ngModel)]="accountData.email" formControlName="accountEmail" required>
+        <input type="email" placeholder="{{'email_add' | translate}}" [(ngModel)]="accountData.email" formControlName="accountEmail" required>
         <div *ngIf="errorValid && accountForm.controls.accountEmail.hasError('required')" class="err-field">
           <div class="form-err">{{ 'field_required' | translate }}</div>
         </div>

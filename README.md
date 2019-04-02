@@ -1,4 +1,4 @@
-# Uniti
+Uniti
 Mobile hybrid application.
 
 Have you ever used a Headset to speak to the Group or listen to the Tour Guide? Now you can use your own device and earphones to do the same. It is a hygenic and eco-friendly, radio interference free solution. Unlimited Tour Groups and Tourists in the Group give you the opportunity to expand your list of destinations. 

@@ -3,17 +3,24 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { TranslateService } from '@ngx-translate/core';
+import { HTTP } from '@ionic-native/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/filter';
+import {Subject} from "rxjs";
 
-const apiUrl = 'http://uniti.redstone.media:3000'; 
+const apiUrl = 'http://uniti.redstone.media:3000';
 
 @Injectable()
 export class ApiDataService {
-    
-  constructor(private http: HttpClient, public alertCtrl: AlertController, public translate: TranslateService) {}
+
+  private subject = new Subject<any>();
+
+  constructor(private http: HttpClient,
+              public alertCtrl: AlertController,
+              public translate: TranslateService,
+              private cordovaHttp: HTTP) {}
     
  /*************/    
  /*USERS API*/
@@ -445,6 +452,22 @@ export class ApiDataService {
         let errorMsg = 'Error';
         return Observable.throw(errorMsg);
       });
+  }
+
+  loadTranslation() {
+    const appLanguage = window.localStorage.getItem('unitiLang');
+    this.cordovaHttp.get( `http://uniti.redstone.media/lang/translate/${appLanguage}.json`, {}, {})
+      .then(data => {
+        const translateArray = JSON.parse(data.data);
+        this.subject.next(translateArray);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  watchLanguageChange() {
+    return this.subject.asObservable();
   }
 
 }

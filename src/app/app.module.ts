@@ -40,7 +40,6 @@ import { Camera } from '@ionic-native/camera';
 import { Keyboard } from '@ionic-native/keyboard';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Globalization } from '@ionic-native/globalization';
 import { AppRate } from '@ionic-native/app-rate';
 import { LocalNotifications } from '@ionic-native/local-notifications';
@@ -53,13 +52,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { AppPreviewPage } from '../pages/app-preview/app-preview';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { messageCounterService } from "../pages/services/messageCounte.services";
-
-// export function createTranslateLoader(http: HttpClient) {
-//   return new TranslateHttpLoader(http, 'http://uniti.redstone.media/lang/translate/', '.json');
-// }
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/translate/', '.json');
-}
+import { HTTP } from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -94,7 +87,8 @@ export function createTranslateLoader(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
+        useClass: languageService,
+        // useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }   
     }),  
@@ -137,7 +131,7 @@ export function createTranslateLoader(http: HttpClient) {
     SocketIo,
     Keyboard,
     DataUpdateService, 
-    BackgroundMode, 
+    BackgroundMode,
     Globalization, 
     AppRate, 
     ActiveCreditsVal,
@@ -148,6 +142,7 @@ export function createTranslateLoader(http: HttpClient) {
     logoutService,
     languageService,
     messageCounterService,
+    HTTP,
     {provide: '_OPTIONS_', useValue: {
     transports: ['websocket'],
     query: {token: window.localStorage.getItem('authUniti'),

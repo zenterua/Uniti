@@ -114,8 +114,6 @@ export class MenuPage {
       buttons: [{
        text: 'OK',
           handler: () => {
-            window.localStorage.removeItem('isCard');
-            window.localStorage.removeItem('room_name');
             this.authService.logout();
             window.localStorage.setItem('logoutEvent', 'islogout');
             this.appCtrl.getRootNav().setRoot(AppPreviewPage, {logout:true});

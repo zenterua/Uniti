@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { NavController, AlertController, ToastController, ActionSheetController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { File } from '@ionic-native/file';
@@ -15,7 +15,7 @@ declare var cordova: any;
   selector: 'page-account',
   templateUrl: 'account.html'
 })
-export class AccountPage {
+export class AccountPage implements OnInit{
     accountForm: FormGroup;
     accountData = {
         first_name: '',
@@ -39,14 +39,16 @@ export class AccountPage {
 								 public alertCtrl: AlertController,
 								 private dataUpdateService:DataUpdateService,
 								 public translate: TranslateService,
-								 public loadingCtrl: LoadingController ) {
-        this.accountForm = new FormGroup({
-            accountName: new FormControl('', [<any>Validators.required]),
-            accountEmail: new FormControl('', [<any>Validators.required])
-        });
-        this.setUserData(); 
-        let update:any = {isupdate:''}
-        this.dataUpdateService.changeMessage(update);
+								 public loadingCtrl: LoadingController ) {}
+
+    ngOnInit() {
+      this.accountForm = new FormGroup({
+        accountName: new FormControl('', [<any>Validators.required]),
+        accountEmail: new FormControl('', [<any>Validators.required])
+      });
+      this.setUserData();
+      let update:any = {isupdate:''}
+      this.dataUpdateService.changeMessage(update);
     }
     
     setUserData(){
